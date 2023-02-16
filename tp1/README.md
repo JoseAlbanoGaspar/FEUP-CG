@@ -1,12 +1,14 @@
 # CG 2022/2023
 
-## Group T0xG0y
+## Group T04G05
 
 ## TP 1 Notes
 
-(add your main observations/remarks about your experiments here, in a bulleted list, and remove this line. Some examples below)
+### Exercise 2: Small Triangle
+![Screenshot 1](screenshots/cg-t04g05-tp1-1.png)
 
-- In exercise 1 we observed X
-- In exercise 2 we had difficulties in Y
+### Exercise 2: Big Triangle
+![Screenshot 2](screenshots/cg-t04g05-tp1-2.png)
 
-![Screenshot 1](screenshots/cg-t0xgxx-tp1-n.png)
+### Exercise 2: All figure created in TP1
+![Screenshot 3](screenshots/CG-t04g05-tp1-3.png)
