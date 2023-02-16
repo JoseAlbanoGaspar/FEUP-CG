@@ -23,9 +23,14 @@ export class MyParallelogram extends CGFobject {
 		//Counter-clockwise reference of vertices
 		this.indices = [
 			0, 1, 2,
+			2, 1, 0,
             1, 4, 2,
+			2, 4, 1,
             1, 3, 4,
-            3, 5, 4
+			4, 3, 1,
+            3, 5, 4,
+			4, 5, 3
+
 		];
 
 		//The defined indices (and corresponding vertices)
