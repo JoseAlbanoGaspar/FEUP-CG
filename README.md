@@ -1,10 +1,10 @@
 # CG 2022/2023
 
 ## Group T04G05
-| Name             | Number    | E-Mail             |
-| ---------------- | --------- | ------------------ |
-| Inês Gaspar         | 202007210 | up202007210@edu.fe.up.pt        |
-| José Gaspar         | 202008562 | up202008562@edu.fe.up.pt               |
+| Name             | Number    | E-Mail                          |
+| ---------------- | --------- | --------------------------------|
+| Inês Gaspar      | 202007210 | up202007210@edu.fe.up.pt        |
+| José Gaspar      | 202008562 | up202008562@edu.fe.up.pt        |
 
 ----
 
