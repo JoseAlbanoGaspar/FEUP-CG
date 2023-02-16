@@ -3,8 +3,8 @@
 ## Group T0xG0y
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| Inês Gaspar         | 202007210 | up202007210@edu.fe.up.pt        |
+| José Gaspar         | 201901011 | up202008562@edu.fe.up.pt               |
 
 ----
 
