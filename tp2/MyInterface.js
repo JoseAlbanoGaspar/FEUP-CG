@@ -38,6 +38,9 @@ export class MyInterface extends CGFinterface {
         //Slider element in GUI
         this.gui.add(this.scene, 'scaleFactor', 0.1, 5).name('Scale Factor');
 
+        //tangran checkbox
+        this.gui.add(this.scene, 'displayTangran').name('Tangran');
+
         return true;
     }
 }
