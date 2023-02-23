@@ -40,17 +40,10 @@ export class MyScene extends CGFscene {
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.displayDiamond = true;
-<<<<<<< HEAD
     this.displayTriangle = false;
     this.displayParallelogram = false;
     this.displayTriangleSmall = false;
     this.displayTriangleBig = false;
-=======
-    this.displayTriangle = true;
-    this.displayParallelogram = true;
-    this.displayTriangleSmall = true;
-    this.displayTriangleBig = true;
->>>>>>> 4dd87b56a1313b5b98b637840ed3fcebac0ea5cc
   }
 
   initLights() {
