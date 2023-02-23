@@ -42,7 +42,7 @@ export class MyScene extends CGFscene {
     this.displayDiamond = true;
     this.displayTriangle = false;
     this.displayParallelogram = false;
-    this.displayTriangleSmall = false;
+    this.displayTriangleSmall = true;
     this.displayTriangleBig = false;
   }
 
@@ -135,7 +135,13 @@ export class MyScene extends CGFscene {
     }
     if (this.displayTriangle) this.triangle.display();
     if (this.displayParallelogram) this.parallellogram.display();
-    if (this.displayTriangleSmall) this.triangleSmall.display();
+    if (this.displayTriangleSmall){
+      this.pushMatrix(); 
+      this.translate(-Math.SQRT2/2,-3 * Math.SQRT2 / 2,0);
+      this.rotate(-Math.PI/4, 0, 0, 1);
+      this.triangleSmall.display();
+      this.popMatrix();
+    }
     if (this.displayTriangleBig) this.triangleBig.display();
 
     // ---- END Primitive drawing section
