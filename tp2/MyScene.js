@@ -40,7 +40,7 @@ export class MyScene extends CGFscene {
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.displayDiamond = true;
-    this.displayTriangle = false;
+    this.displayTriangle = true;
     this.displayParallelogram = true;
     this.displayTriangleSmall = true;
     this.displayTriangleBig = false;
@@ -133,12 +133,18 @@ export class MyScene extends CGFscene {
       
       
     }
-    if (this.displayTriangle) this.triangle.display();
+    if (this.displayTriangle){
+      this.pushMatrix();
+      this.translate(0,Math.SQRT2,0);
+      this.rotate(- 3 * Math.PI / 4, 0, 0, 1);
+      this.triangle.display();
+      this.popMatrix();
+    }
     if (this.displayParallelogram){
       this.pushMatrix();
       this.translate(-Math.SQRT2,0,0);
       this.rotate(Math.PI / 4, 0, 0, 1);
-      this.rotate( Math.PI , 1, 0,0 );
+      this.rotate( Math.PI , 1, 0, 0 );
       this.parallellogram.display();
       this.popMatrix();
     }
