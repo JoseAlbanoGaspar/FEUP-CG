@@ -11,3 +11,7 @@
 ### Exercise 2: Unit Cube
 
 ![Screenshot 1](screenshots/cg-t04g05-tp2-2.png)
+
+### Exercise 3: Cube made with plan
+
+![Screenshot 1](screenshots/cg-t04g05-tp2-3.png)
