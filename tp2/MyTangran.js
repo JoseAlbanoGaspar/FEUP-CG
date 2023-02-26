@@ -22,8 +22,8 @@ export class MyTangran extends CGFobject {
         this.parallellogram = new MyParallelogram(scene);
         this.triangleSmall = new MyTriangleSmall(scene);
         this.triangleBig = new MyTriangleBig(scene);
-        this.unitCube = new MyUnitCube(scene);
-        //this.unitCubeQuad = new MyUnitCubeQuad(scene);
+        //this.unitCube = new MyUnitCube(scene);
+        this.unitCubeQuad = new MyUnitCubeQuad(scene);
 	}
 	
 	
@@ -93,17 +93,17 @@ export class MyTangran extends CGFobject {
             this.triangleBig.display();
             this.scene.popMatrix();
 
+            /*
             this.scene.pushMatrix();
             this.scene.translate(0.5, 0.5, -0.5);
             this.unitCube.display();
             this.scene.popMatrix();
+            */
 
-            /*
             this.scene.pushMatrix();
             this.scene.translate(0.5, 0.5, -0.5);
             this.unitCubeQuad.display();
             this.scene.popMatrix();
-            */
         }
     }
 }
