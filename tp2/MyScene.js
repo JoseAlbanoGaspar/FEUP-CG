@@ -108,7 +108,12 @@ export class MyScene extends CGFscene {
     this.multMatrix(sca);
 
     // ---- BEGIN Primitive drawing section
+    this.pushMatrix();
+    this.translate(0, 0, 1);
+    this.rotate(-Math.PI/2, 1, 0, 0);
     this.tangran.display();
+    this.popMatrix();
+    
     
     /*
     if (this.displayUnitCube) {
@@ -117,10 +122,6 @@ export class MyScene extends CGFscene {
       this.unitCube.display();
     } */
     
-    this.pushMatrix();
-    this.translate(0.5, 0.5, 0.5);
-    this.unitCubeQuad.display();
-    this.popMatrix();
 
     // ---- END Primitive drawing section
   }
