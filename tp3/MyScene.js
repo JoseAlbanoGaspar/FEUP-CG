@@ -46,10 +46,8 @@ export class MyScene extends CGFscene {
         this.displayAxis = true;
         this.displayNormals = false;
         this.objectComplexity = 0.5;
-        this.scaleFactor = 2.0;
+        this.scaleFactor = 1.0;
         this.ambientIntensity = 0.3;
-        this.displayTangram = false;
-        this.displayCube = false;
 
     }
     initLights() {
@@ -105,7 +103,7 @@ export class MyScene extends CGFscene {
     };
 
     updateObjectComplexity(){
-        this.objects[this.selectedObject].updateBuffers(this.objectComplexity);
+        if(this.selectedObject <3 )  this.objects[this.selectedObject].updateBuffers(this.objectComplexity);  //note: this is only because tangram and cube do not have this implemented
     }
 
 

@@ -17,6 +17,11 @@ export class MyTriangleSmall extends CGFobject {
            1, 0, 0,
            0, 1, 0
         ];
+        
+        this.normals = [];
+		for (var i = 0; i < this.vertices.length / 3; i++) {
+            this.normals.push(0, 0, 1);
+        }
 
         this.indices = [
             0, 1, 2

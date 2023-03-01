@@ -15,9 +15,22 @@ export class MyParallelogram extends CGFobject {
 			0, 0, 0,	//0
 			1, 1, 0,	//1
 			2, 0, 0,	//2
+            3, 1, 0,    //3
+
+			0, 0, 0,	//0
+			1, 1, 0,	//1
+			2, 0, 0,	//2
             3, 1, 0     //3
 		];
 
+		this.normals = [];
+		for (var i = 0; i < this.vertices.length / 6; i++) {
+            this.normals.push(0, 0, -1);
+        }
+		for (var i = 0; i < this.vertices.length / 6; i++) {
+            this.normals.push(0, 0, 1);
+        }
+		
 		//Counter-clockwise reference of vertices
 		this.indices = [
 			0, 3, 1,

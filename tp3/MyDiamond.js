@@ -18,6 +18,10 @@ export class MyDiamond extends CGFobject {
 			1, 0, 0		//3
 		];
 
+		this.normals = [];
+		for (var i = 0; i < this.vertices.length / 3; i++) {
+            this.normals.push(0, 0, 1);
+        }
 		//Counter-clockwise reference of vertices
 		this.indices = [
 			0, 1, 2,
