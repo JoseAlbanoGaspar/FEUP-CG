@@ -69,7 +69,9 @@ export class MyTangran extends CGFobject {
         this.orange.setDiffuse(color[0], color[1], color[2], 1.0);
         this.orange.setShininess(10.0);
 
-        this.colors = [this.yellow, this.pink, this.purple, this.green, this.blue, this.red, this.orange];
+        this.custom = scene.customMaterial;
+
+        this.colors = [this.yellow, this.pink, this.purple, this.green, this.blue, this.red, this.orange, this.custom];
 
         this.initBuffers();
 	}
@@ -110,7 +112,7 @@ export class MyTangran extends CGFobject {
     
         this.scene.multMatrix(tr);
         this.scene.multMatrix(matrixRotate);
-        this.colors[3].apply();
+        this.colors[7].apply();
         this.diamond.display();
         this.scene.popMatrix();
         
