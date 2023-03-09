@@ -14,13 +14,6 @@ export class MyPrism extends CGFobject {
         this.initBuffers();
 
     }
-	normalizeVector(x, y, z) {
-        const length = Math.sqrt(x * x + y * y + z * z);
-        const normalizedX = x / length;
-        const normalizedY = y / length;
-        const normalizedZ = z / length;
-        return [normalizedX, normalizedY, normalizedZ];
-    }
 
 	initBuffers() {
 		this.vertices = [];
@@ -54,7 +47,6 @@ export class MyPrism extends CGFobject {
                 let skip = 4*i + 4*this.slices*k;
                 this.indices.push(0 + skip, 1 + skip, 2 + skip);
                 this.indices.push(0 + skip, 2 + skip , 3 + skip);
-                
 
                 ang+=alphaAng
             }
