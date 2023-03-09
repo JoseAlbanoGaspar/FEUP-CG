@@ -89,6 +89,7 @@ export class MyPrism extends CGFobject {
                 else{
                     this.normals.push(norm[0],norm[1],norm[2]);
                 }
+                
                 this.vertices.push(Math.cos(ang), Math.sin(ang), stack);
                 let norm2 = this.normalizeVector(1,Math.tan(ang - alphaAng/2),0);
                 if(ang >= Math.PI && ang <  2 * Math.PI ){
