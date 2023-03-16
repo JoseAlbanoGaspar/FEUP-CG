@@ -24,39 +24,51 @@ export class MyCylinder extends CGFobject {
         var alphaAng = 2*Math.PI/this.slices;
         let stackSize = this.CYLINDERSIZE / this.stacks;
  
-        this.points = [];
-        this.line = [];
+        let points1 = [];
 
         let verticesNum = 0;
+        let normal1 = [Math.cos(ang), Math.sin(ang), 0];
         for(let i = 0; i < this.stacks+1; i++){
             let p1 = [Math.cos(ang), Math.sin(ang), i*stackSize]; 
-            this.normals.push((p1[0])/2,(p1[1])/2,0);
+            this.normals.push(...normal1);
             verticesNum++;
-            ang += alphaAng;
-            this.points.push(p1);
+            points1.push(...p1);
         }
 
-        this.line.push(...this.points);
+        this.vertices.push(...points1);
     
-        for(let u=0; u<this.slices-1; u++) {
-            for(let j = 0; j < this.stacks; j++ ){
+        for(let l=0; l<this.slices-1; l++) {
+            points1 = [];
+            let normal = [Math.cos(ang + alphaAng), Math.sin(ang + alphaAng), 0];
+            for(let j = 0; j < this.stacks+1; j++ ){
                 let p2 = [Math.cos(ang + alphaAng), Math.sin(ang + alphaAng), j*stackSize];
-                this.normals.push((p2[0])/2,(p2[1])/2,0);
+                this.normals.push(...normal);
                 verticesNum++;
-                ang += alphaAng;
-                this.points.push(p2);
+                points1.push(...p2);
             }
-            this.line.push(...this.points);
+        
+            this.vertices.push(...points1);
+
+            for(let k=0; k<this.stacks; k++){
+                let indice1 = verticesNum - 2*(this.stacks+1) + k;
+                let indice2 = verticesNum - (this.stacks+1) + k;
+                this.indices.push(indice1, indice2, indice2+1);
+                this.indices.push(indice1, indice2+1, indice1+1);
+            }
+
+            ang += alphaAng;
         }
 
-        console.log("vertices ", this.line);
-            
-        for(let k=0; k<verticesNum; k++){
-            let indice1 = k;
-            let indice2 = k + (this.stacks+1);
+        for(let k=0; k<this.stacks; k++){
+            let indice1 = verticesNum - (this.stacks+1) + k;
+            let indice2 = k;
             this.indices.push(indice1, indice2, indice2+1);
             this.indices.push(indice1, indice2+1, indice1+1);
         }
+        console.log("array vertices ", this.vertices);
+        console.log("number vertices ", verticesNum);
+        console.log("normals ", this.normals);
+    
     
         console.log("indices ", this.indices);
 		//The defined indices (and corresponding vertices)
