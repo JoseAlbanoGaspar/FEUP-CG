@@ -1,6 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFtexture } from "../lib/CGF.js";
 import { MyQuad } from "./MyQuad.js";
 import { MyTangran } from "./MyTangran.js"
+import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
 
 /**
  * MyScene
@@ -30,6 +31,14 @@ export class MyScene extends CGFscene {
         this.quad = new MyQuad(this);
         this.tangram = new MyTangran(this);
 
+        this.cubeTextureTop = new CGFtexture(this, 'images/mineTop.png');
+        this.cubeTextureBottom = new CGFtexture(this, 'images/mineBottom.png');
+        this.cubeTextureSides = new CGFtexture(this, 'images/mineSide.png');
+
+        this.cubeQuad = new MyUnitCubeQuad(this, this.cubeTextureTop, this.cubeTextureSides, 
+            this.cubeTextureSides, this.cubeTextureSides, this.cubeTextureSides, 
+            this.cubeTextureBottom);
+
         //------ Applied Material
         this.quadMaterial = new CGFappearance(this);
         this.quadMaterial.setAmbient(0.1, 0.1, 0.1, 1);
@@ -50,7 +59,8 @@ export class MyScene extends CGFscene {
         //-------Objects connected to MyInterface
         this.displayAxis = true;
         this.quadDisplay = false;
-        this.displayTangran = true;
+        this.displayTangran = false;
+        this.displayCubeQuad = true;
         this.scaleFactor = 5;
         this.selectedTexture = -1;        
         this.wrapS = 0;
@@ -131,7 +141,7 @@ export class MyScene extends CGFscene {
         // Uncomment next line for NEAREST when magnifying, or 
         // add a checkbox in the GUI to alternate in real time
         
-        // this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
+        //this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
 
         if(this.quadDisplay){
             this.quadMaterial.apply();
@@ -140,6 +150,12 @@ export class MyScene extends CGFscene {
 
         if(this.displayTangran)
             this.tangram.display();
+
+        if(this.displayCubeQuad){
+        
+            this.cubeQuad.display();
+        }
+    
         // ---- END Primitive drawing section
     }
 
