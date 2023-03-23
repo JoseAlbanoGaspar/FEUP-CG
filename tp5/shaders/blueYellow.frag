@@ -24,7 +24,7 @@ varying float filterYCord;
 
 void main() {
     if(filterYCord < 0.5)
-		gl_FragColor =  vec4(0.6,0.6,0.9, 1.0) * uLight[0].diffuse;
+		    gl_FragColor =  vec4(0.6,0.6,0.9, 1.0) * uLight[0].diffuse;
     else
         gl_FragColor =  vec4(0.8,0.8,0.1, 1.0) * uLight[0].diffuse;
 }
