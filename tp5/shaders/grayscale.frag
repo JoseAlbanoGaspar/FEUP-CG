@@ -27,9 +27,9 @@ void main() {
 	vec4 color = vec4(0.6,0.6,0.9, 1.0) * uLight[0].diffuse;
 
 	vec4 colorSepia = color;
-	colorSepia.r = color.r * 0.299;
-	colorSepia.g = color.g * 0.587;
-	colorSepia.b = color.b * 0.114;
+	colorSepia.r = color.r * 0.299 + color.g * 0.587 + color.b * 0.114;
+	colorSepia.g = color.r * 0.299 + color.g * 0.587 + color.b * 0.114;
+	colorSepia.b = color.r * 0.299 + color.g * 0.587 + color.b * 0.114;
 
 	gl_FragColor = colorSepia;
 }

@@ -90,6 +90,7 @@ export class ShaderScene extends CGFscene {
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/sepia.frag"),
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/convolution.frag"),
 			new CGFshader(this.gl, "shaders/blueYellow.vert", "shaders/blueYellow.frag"),
+			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/grayscale.frag"),
 			new CGFshader(this.gl, "shaders/water.vert", "shaders/water.frag")
 		];
 
@@ -99,7 +100,8 @@ export class ShaderScene extends CGFscene {
 		this.testShaders[6].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[6].setUniformsValues({ timeFactor: 0 });
 		this.testShaders[9].setUniformsValues({ normScale: this.scaleFactor, timeFactor: 0 });
-		this.testShaders[10].setUniformsValues({ uSampler2: 1, timeFactor: 0 });
+		this.testShaders[10].setUniformsValues({ uSampler2: 1 });
+		this.testShaders[11].setUniformsValues({ uSampler2: 1, timeFactor: 0 });
 
 		// Shaders interface variables
 
@@ -114,7 +116,8 @@ export class ShaderScene extends CGFscene {
 			'Sepia': 7,
 			'Convolution': 8,
 			'Ex1': 9,
-			'Water': 10
+			'Grey': 10,
+			'Water': 11
 		};
 
 		// shader code panels references
@@ -203,8 +206,8 @@ export class ShaderScene extends CGFscene {
 		if (this.selectedExampleShader == 9)
 			this.testShaders[9].setUniformsValues({ timeFactor: t / 100 % 100 });
 
-		if (this.selectedExampleShader == 10)
-			this.testShaders[10].setUniformsValues({ timeFactor: t % 10000 });	
+		if (this.selectedExampleShader == 11)
+			this.testShaders[11].setUniformsValues({ timeFactor: t % 10000 });	
 	}
 
 	// main display function

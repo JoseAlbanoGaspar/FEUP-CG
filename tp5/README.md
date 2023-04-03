@@ -10,6 +10,6 @@
 
 ### Exercise 2: Changed grayscale
 
-
+![Screenshot 2](screenshots/cg-t04g05-tp5-2.png)
 
 ### Exercise 3: Water Shader
