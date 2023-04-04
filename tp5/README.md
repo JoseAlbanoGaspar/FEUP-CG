@@ -13,3 +13,6 @@
 ![Screenshot 2](screenshots/cg-t04g05-tp5-2.png)
 
 ### Exercise 3: Water Shader
+
+<video src="screenshots/cg-t04g05-tp5-3.mp4" controls="controls">
+<video>
