@@ -1,7 +1,7 @@
 import { CGFobject } from '../lib/CGF.js';
 
 export class MySphere extends CGFobject {
-  constructor(scene, radius, slices, stacks, inverted) {
+  constructor(scene, radius, slices, stacks, inverted=false) {
     super(scene);
 
     this.radius = radius;
