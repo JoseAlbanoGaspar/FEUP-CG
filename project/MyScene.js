@@ -1,5 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPlane } from "./MyPlane.js";
+import { MyPanorama } from "./MyPanorama.js";
 import { MySphere } from "./MySphere.js";
 
 /**
@@ -24,10 +25,12 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
+    this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.sphere = new MySphere(this,1,30,30);
+    //this.sphere = new MySphere(this,1,30,30);
+    this.panoramaSphere = new MyPanorama(this, this.panoramaText);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -91,15 +94,17 @@ this.sphereAppearence.setTexture(this.earthText);
     this.plane.display();
     this.popMatrix();
     
-    this.sphereAppearence.setAmbient(1,1,1,1);
+    //this.sphereAppearence.setAmbient(1,1,1,1);
     
-    this.pushMatrix();
-    this.sphereAppearence.apply();
-    //this.scale(200,200,200);
+    //this.pushMatrix();
+    //this.sphereAppearence.apply();
+    
     //this.sphere.enableNormalViz();
-    this.sphere.display();
+    //this.scale(200,200,200);
+    //this.sphere.display();
+    this.panoramaSphere.display();
     
-    this.popMatrix();
+    //this.popMatrix();
 
     // ---- END Primitive drawing section
   }

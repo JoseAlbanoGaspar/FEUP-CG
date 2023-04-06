@@ -1,12 +1,13 @@
 import { CGFobject } from '../lib/CGF.js';
 
 export class MySphere extends CGFobject {
-  constructor(scene, radius, slices, stacks) {
+  constructor(scene, radius, slices, stacks, inverted) {
     super(scene);
 
     this.radius = radius;
     this.slices = slices;
     this.stacks = stacks;
+    this.inverted = inverted;
 
     this.initBuffers();
   }
@@ -16,7 +17,7 @@ export class MySphere extends CGFobject {
     this.indices = [];
     this.normals = [];
     this.texCoords = [];
-
+    
     for (let i = 0; i <= this.stacks; i++) {
       let theta = i * Math.PI / this.stacks;
       let sinTheta = Math.sin(theta);
@@ -35,9 +36,8 @@ export class MySphere extends CGFobject {
         let v = i / this.stacks;
 
         this.vertices.push(this.radius * x, this.radius * y, this.radius * z);
-        this.normals.push(x, y, z);
-        //scenario 2
-        //this.normals.push(-x, -y, -z);
+        
+        this.inverted ? this.normals.push(-x, -y, -z) : this.normals.push(x, y, z);
         this.texCoords.push(u, v);
       }
     }
@@ -46,11 +46,14 @@ export class MySphere extends CGFobject {
       for (let j = 0; j < this.slices; j++) {
         let a = i * (this.slices + 1) + j;
         let b = a + this.slices + 1;
-        //scenario 2
-        //this.indices.push(a, b, a + 1);
-        //this.indices.push(b, b + 1, a + 1);
-        this.indices.push(a + 1, b , a);
-        this.indices.push(a + 1, b + 1, b);
+        if(this.inverted){
+          this.indices.push(a, b, a + 1);
+          this.indices.push(b, b + 1, a + 1);
+        }
+        else{
+          this.indices.push(a + 1, b , a);
+          this.indices.push(a + 1, b + 1, b);
+        }
       }
     }
 
