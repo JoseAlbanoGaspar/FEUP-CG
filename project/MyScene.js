@@ -26,29 +26,41 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
-    this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
-    //Initialize scene objects
-    this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
-    //this.sphere = new MySphere(this,1,30,30);
-    this.panoramaSphere = new MyPanorama(this, this.panoramaText);
-    this.bird = new MyBird(this);
-
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
+    this.selectedShader = 0;
+
+    //loading textures
+    this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
+    this.texture = new CGFtexture(this, "images/terrain.jpg");
+    //this.earthText = new CGFtexture(this, "images/earth.jpg");
+
+    //creating materials
+    this.appearance = new CGFappearance(this);
+    this.appearance.setTexture(this.texture);
+    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+
+    //this.sphereAppearence = new CGFappearance(this);
+    //this.sphereAppearence.setTexture(this.earthText);
+    
+    //Initialize scene objects
+    this.axis = new CGFaxis(this);
+    this.plane = new MyPlane(this,30);
+    this.bird = new MyBird(this);
+    //this.sphere = new MySphere(this,1,30,30);
+    this.panoramaSphere = new MyPanorama(this, this.panoramaText);
+    
+
+    //Shaders
+    this.shaders = [
+			new CGFshader(this.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag")
+    ]
+
+    this.shaders[0].setUniformsValues({ normScale: this.scaleFactor, timeFactor: 0 });
 
     this.enableTextures(true);
-
-this.texture = new CGFtexture(this, "images/terrain.jpg");
-this.earthText = new CGFtexture(this, "images/earth.jpg");
-
-this.appearance = new CGFappearance(this);
-this.appearance.setTexture(this.texture);
-this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-
-this.sphereAppearence = new CGFappearance(this);
-this.sphereAppearence.setTexture(this.earthText);
+    this.setUpdatePeriod(50);
 
   }
   initLights() {
@@ -94,6 +106,18 @@ this.sphereAppearence.setTexture(this.earthText);
             ];
         return ret;
     }
+  
+
+  // called periodically (as per setUpdatePeriod() in init())
+	update(t) {
+		// only shader 0 is using time factor
+		if (this.selectedShader == 0)
+			// Dividing the time by 100 "slows down" the variation (i.e. in 100 ms timeFactor increases 1 unit).
+			// Doing the modulus (%) by 100 makes the timeFactor loop between 0 and 99
+			// ( so the loop period of timeFactor is 100 times 100 ms = 10s ; the actual animation loop depends on how timeFactor is used in the shader )
+			this.shaders[0].setUniformsValues({ timeFactor: t / 100 % 100 });
+		
+	}
 
   display() {
     // ---- BEGIN Background, camera and axis setup
@@ -119,18 +143,15 @@ this.sphereAppearence.setTexture(this.earthText);
     this.plane.display();
     this.popMatrix();
     
-    //this.sphereAppearence.setAmbient(1,1,1,1);
     
-    //this.pushMatrix();
-    //this.sphereAppearence.apply();
-    
-    //this.sphere.enableNormalViz();
-    //this.scale(200,200,200);
-    //this.sphere.display();
     this.panoramaSphere.display();
     
+    //this.setActiveShader(this.shaders[0]);
+    this.pushMatrix();
     this.bird.display();
-    //this.popMatrix();
+    this.popMatrix();
+    //this.setActiveShader(this.shaders[0]);
+    this.setActiveShader(this.defaultShader);
 
     // ---- END Primitive drawing section
   }
