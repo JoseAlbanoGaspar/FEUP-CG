@@ -3,6 +3,7 @@ import { MyPlane } from "./MyPlane.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MySphere } from "./MySphere.js";
 import { MyBird } from "./MyBird.js";
+import { MyTerrain } from "./MyTerrain.js";
 
 /**
  * MyScene
@@ -34,6 +35,7 @@ export class MyScene extends CGFscene {
     //loading textures
     this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
     this.texture = new CGFtexture(this, "images/terrain.jpg");
+    this.textureHeight = new CGFtexture(this, "images/heightmap.jpg");
     //this.earthText = new CGFtexture(this, "images/earth.jpg");
 
     //creating materials
@@ -46,7 +48,7 @@ export class MyScene extends CGFscene {
     
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
+    this.planeTerrain = new MyTerrain(this, this.texture, this.textureHeight);
     this.bird = new MyBird(this);
     //this.sphere = new MySphere(this,1,30,30);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
@@ -54,7 +56,8 @@ export class MyScene extends CGFscene {
 
     //Shaders
     this.shaders = [
-			new CGFshader(this.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag")
+			new CGFshader(this.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag"),
+      new CGFshader(this.gl, "shaders/height.vert", "shaders/height.frag")
     ]
 
     this.shaders[0].setUniformsValues({ normScale: this.scaleFactor, timeFactor: 0 });
@@ -135,14 +138,7 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    this.pushMatrix();
-    this.appearance.apply();
-    this.translate(0,-100,0);
-    this.scale(400,400,400);
-    this.rotate(-Math.PI/2.0,1,0,0);
-    this.plane.display();
-    this.popMatrix();
-    
+    this.planeTerrain.display();
     
     this.panoramaSphere.display();
     
