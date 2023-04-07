@@ -1,9 +1,8 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
-import { MyPlane } from "./MyPlane.js";
+import { MyTerrain } from "./MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MySphere } from "./MySphere.js";
 import { MyBird } from "./MyBird.js";
-import { MyTerrain } from "./MyTerrain.js";
 
 /**
  * MyScene
@@ -33,9 +32,10 @@ export class MyScene extends CGFscene {
     this.selectedShader = 0;
 
     //loading textures
-    this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
+    
     this.texture = new CGFtexture(this, "images/terrain.jpg");
-    this.textureHeight = new CGFtexture(this, "images/heightmap.jpg");
+    this.texture2 = new CGFtexture(this, "images/heightmap.jpg");
+    this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
     //this.earthText = new CGFtexture(this, "images/earth.jpg");
 
     //creating materials
@@ -48,8 +48,9 @@ export class MyScene extends CGFscene {
     
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.planeTerrain = new MyTerrain(this, this.texture, this.textureHeight);
+    this.terrain = new MyTerrain(this, this.texture, this.texture2);
     this.bird = new MyBird(this);
+    //this.plane = new MyPlane(this,30);
     //this.sphere = new MySphere(this,1,30,30);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     
@@ -61,6 +62,7 @@ export class MyScene extends CGFscene {
     ]
 
     this.shaders[0].setUniformsValues({ normScale: this.scaleFactor, timeFactor: 0 });
+    this.shaders[1].setUniformsValues({uSampler2 : 1});
 
     this.enableTextures(true);
     this.setUpdatePeriod(50);
@@ -138,7 +140,10 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    this.planeTerrain.display();
+    this.setActiveShader(this.shaders[1]);
+    this.texture2.bind(1);
+    this.terrain.display();
+    this.setActiveShader(this.defaultShader);
     
     this.panoramaSphere.display();
     

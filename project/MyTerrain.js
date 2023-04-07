@@ -16,12 +16,6 @@ export class MyTerrain extends CGFobject {
 
         this.materialPlane.setTexture(terrainText);
 		this.materialPlane.setTextureWrap('REPEAT', 'REPEAT');
-
-        this.shader = [
-            new CGFshader(this.scene.gl, "shaders/height.vert", "shaders/height.frag"),
-        ];
-
-        this.shader.setUniformsValues({ normScale: this.scene.scaleFactor, timeFactor: 0 });
     
         this.initBuffers();
 	}
