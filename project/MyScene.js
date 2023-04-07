@@ -32,37 +32,23 @@ export class MyScene extends CGFscene {
     this.selectedShader = 0;
 
     //loading textures
-    
-    this.texture = new CGFtexture(this, "images/terrain.jpg");
-    this.texture2 = new CGFtexture(this, "images/heightmap.jpg");
     this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
-    //this.earthText = new CGFtexture(this, "images/earth.jpg");
-
-    //creating materials
-    this.appearance = new CGFappearance(this);
-    this.appearance.setTexture(this.texture);
-    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
-
-    //this.sphereAppearence = new CGFappearance(this);
-    //this.sphereAppearence.setTexture(this.earthText);
     
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.terrain = new MyTerrain(this, this.texture, this.texture2);
     this.bird = new MyBird(this);
-    //this.plane = new MyPlane(this,30);
-    //this.sphere = new MySphere(this,1,30,30);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     
 
     //Shaders
     this.shaders = [
-			new CGFshader(this.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag"),
-      new CGFshader(this.gl, "shaders/height.vert", "shaders/height.frag")
+			new CGFshader(this.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag")
+      
     ]
 
     this.shaders[0].setUniformsValues({ normScale: this.scaleFactor, timeFactor: 0 });
-    this.shaders[1].setUniformsValues({uSampler2 : 1});
+    
 
     this.enableTextures(true);
     this.setUpdatePeriod(50);
@@ -140,11 +126,7 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    this.setActiveShader(this.shaders[1]);
-    this.texture2.bind(1);
-    this.terrain.display();
-    this.setActiveShader(this.defaultShader);
-    
+    this.terrain.display();    
     this.panoramaSphere.display();
     
     //this.setActiveShader(this.shaders[0]);
