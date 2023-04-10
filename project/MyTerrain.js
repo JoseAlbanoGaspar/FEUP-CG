@@ -14,6 +14,7 @@ export class MyTerrain extends CGFobject {
 
 		this.texture = new CGFtexture(scene, "images/terrain.jpg");
     	this.texture2 = new CGFtexture(scene, "images/heightmap.jpg");
+		this.texture3 = new CGFtexture(scene, "images/altimetry.jpg");
 
         this.materialPlane = new CGFappearance(scene);
 
@@ -21,7 +22,7 @@ export class MyTerrain extends CGFobject {
 		this.materialPlane.setTextureWrap('REPEAT', 'REPEAT');
 
 		this.shader = new CGFshader(this.scene.gl, "shaders/height.vert", "shaders/height.frag")
-		this.shader.setUniformsValues({uSampler2 : 1});
+		this.shader.setUniformsValues({uSampler2 : 1, uSampler3 : 2});
 
         this.initBuffers();
 	}
@@ -29,6 +30,7 @@ export class MyTerrain extends CGFobject {
     display() {
 		this.scene.setActiveShader(this.shader);
     	this.texture2.bind(1);
+		this.texture3.bind(2);
 		this.scene.pushMatrix();
         this.materialPlane.apply();
 		this.scene.translate(0,-100,0);
