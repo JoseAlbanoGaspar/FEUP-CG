@@ -16,6 +16,7 @@ export class MyPanorama extends CGFobject {
         this.panoramaAppearence.setTexture(texture);
         this.panoramaAppearence.setAmbient(1,1,1,0);
         this.panoramaAppearence.setDiffuse(0.5,0.5,0.5,1);
+        this.panoramaAppearence.setEmission(1,1,1,0.2);
 
         this.initBuffers();
 	}
