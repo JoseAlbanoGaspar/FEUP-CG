@@ -16,7 +16,7 @@ void main() {
     
     //define altitude
     zOffset = (grayColor.r * 100.0 / 400.0);
-    vec3 newPosition = vec3(aVertexPosition.x, aVertexPosition.y, aVertexPosition.z + zOffset);  // 100?? is the maximum height
+    vec3 newPosition = vec3(aVertexPosition.x, aVertexPosition.y, aVertexPosition.z + zOffset);  // 0.25 is the maximum height
 	 
     gl_Position = uPMatrix * uMVMatrix * vec4(newPosition, 1.0);
 
