@@ -9,6 +9,26 @@ export class MyInterface extends CGFinterface {
         super();
     }
 
+    initKeys() {
+        this.scene.gui = this;
+        this.processKeyboard = function(){};
+        this.activeKeys = {};       //array with keys pressed
+    }
+
+    processKeyDown(event) {
+        this.activeKeys[event.code] = true;
+    }
+
+    processKeyUp(event) {
+        this.activeKeys[event.code] = false;
+    }
+
+    isKeyPressed(keyCode){
+        return this.activeKeys[keyCode] || false;
+    }
+
+
+
     init(application) {
         // call CGFinterface init
         super.init(application);
@@ -22,6 +42,8 @@ export class MyInterface extends CGFinterface {
 
         //Slider element in GUI
         this.gui.add(this.scene, 'scaleFactor', 0.1, 5).name('Scale Factor');
+
+        this.initKeys();
 
         return true;
     }
