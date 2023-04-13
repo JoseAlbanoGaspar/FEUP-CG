@@ -46,7 +46,6 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,30);
     this.bird = new MyBird(this);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
-    
 
     this.enableTextures(true);
 
