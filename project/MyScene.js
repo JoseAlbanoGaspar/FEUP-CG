@@ -127,7 +127,7 @@ export class MyScene extends CGFscene {
     // ---- BEGIN Primitive drawing section
 
     this.terrain.display();    
-    this.panoramaSphere.display();
+    this.panoramaSphere.display(this.camera.position);
     
     //this.setActiveShader(this.shaders[0]);
     this.pushMatrix();
