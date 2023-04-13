@@ -9,9 +9,11 @@ import { MyBird } from "./MyBird.js";
  * @constructor
  */
 export class MyScene extends CGFscene {
+
   constructor() {
     super();
   }
+
   init(application) {
     super.init(application);
     
@@ -63,12 +65,14 @@ export class MyScene extends CGFscene {
     this.setUpdatePeriod(50);
 
   }
+
   initLights() {
     this.lights[0].setPosition(15, 0, 5, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
     this.lights[0].enable();
     this.lights[0].update();
   }
+
   initCameras() {
     this.camera = new CGFcamera(
       1.0,
@@ -78,6 +82,7 @@ export class MyScene extends CGFscene {
       vec3.fromValues(0, 0, 0)
     );
   }
+
   setDefaultAppearance() {
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -85,28 +90,56 @@ export class MyScene extends CGFscene {
     this.setShininess(10.0);
   }
 
-  hexToRgbA(hex)
-    {
-        var ret;
-        //either we receive a html/css color or a RGB vector
-        if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
-            ret=[
-                parseInt(hex.substring(1,3),16).toPrecision()/255.0,
-                parseInt(hex.substring(3,5),16).toPrecision()/255.0,
-                parseInt(hex.substring(5,7),16).toPrecision()/255.0,
-                1.0
-            ];
-        }
-        else
-            ret=[
-                hex[0].toPrecision()/255.0,
-                hex[1].toPrecision()/255.0,
-                hex[2].toPrecision()/255.0,
-                1.0
-            ];
-        return ret;
+  hexToRgbA(hex) {
+    var ret;
+    //either we receive a html/css color or a RGB vector
+    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+        ret=[
+            parseInt(hex.substring(1,3),16).toPrecision()/255.0,
+            parseInt(hex.substring(3,5),16).toPrecision()/255.0,
+            parseInt(hex.substring(5,7),16).toPrecision()/255.0,
+            1.0
+        ];
     }
-  
+    else
+        ret=[
+            hex[0].toPrecision()/255.0,
+            hex[1].toPrecision()/255.0,
+            hex[2].toPrecision()/255.0,
+            1.0
+        ];
+    return ret;
+
+  }
+    
+  checkKeys() {
+    var text = "Key pressed: ";
+    var keyPressed = false;
+    
+    if (this.gui.isKeyPressed("KeyW")) {
+      text += " W ";
+      keyPressed = true;
+    }
+
+    if (this.gui.isKeyPressed("KeyS")) {
+      text += " S ";
+      keyPressed = true;
+    }
+
+    if (this.gui.isKeyPressed("KeyA")) {
+      text += " A ";
+      keyPressed = true;
+    }
+
+    if (this.gui.isKeyPressed("KeyD")) {
+      text += " D ";
+      keyPressed = true;
+    }
+
+    if (keyPressed){
+      console.log(text);
+    }
+  }  
 
   // called periodically (as per setUpdatePeriod() in init())
 	update(t) {
@@ -116,7 +149,7 @@ export class MyScene extends CGFscene {
 			// Doing the modulus (%) by 100 makes the timeFactor loop between 0 and 99
 			// ( so the loop period of timeFactor is 100 times 100 ms = 10s ; the actual animation loop depends on how timeFactor is used in the shader )
 			this.shaders[0].setUniformsValues({ timeFactor: t / 100 % 100 });
-		
+      this.checkKeys();
 	}
 
   display() {
@@ -142,7 +175,6 @@ export class MyScene extends CGFscene {
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
     this.popMatrix();
-    
     
     this.panoramaSphere.display();
     
