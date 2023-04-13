@@ -9,11 +9,10 @@ import { MyWings } from './MyWings.js';
  * @param scene - Reference to MyScene object
  */
 export class MyBird extends CGFobject {
-    
 
 	constructor(scene) {
 		super(scene);
-        
+
         this.body = new MySphere(scene, 3, 30, 30);
         this.eye = new MySphere(scene, 0.5, 15, 15);
         this.beak = new MyCone(scene,30,10);
