@@ -50,6 +50,8 @@ export class MyBird extends CGFobject {
         };
         
         this.heigth = 0;
+        this.velocity = 10;
+        this.wingRotation = 0;
         this.initBuffers();
         scene.setUpdatePeriod(50);
 	}
@@ -66,6 +68,10 @@ export class MyBird extends CGFobject {
 
     update(t){
         this.heigth = Math.sin(2 * Math.PI / 10 * (t / 100 % 10));
+
+        //this.wingRotation = (Math.PI / 6) * Math.sin((2 * Math.PI / this.velocity) * (t / 500 % this.velocity));
+        this.wingRotation = Math.sin((Math.PI / 6) * (t / (1000 / this.velocity))) * (Math.PI / 6);
+
     }
 
     display(){
@@ -103,6 +109,7 @@ export class MyBird extends CGFobject {
         this.scene.popMatrix();
         
         this.scene.pushMatrix();
+        this.scene.rotate(this.wingRotation, 1, 0, 0);
         this.scene.translate(-4.5,-1,-3);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.scene.scale(1.5, 1.5, 1.5);
@@ -110,6 +117,7 @@ export class MyBird extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
+        this.scene.rotate(-this.wingRotation, 1, 0, 0);
         this.scene.translate(-4.5,-1,3);
         this.scene.rotate(Math.PI, 1,0, 0);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);

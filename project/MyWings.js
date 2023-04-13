@@ -31,6 +31,7 @@ export class MyWings extends CGFobject {
     display(){
         this.color.apply();
         this.scene.pushMatrix();
+        this.scene.scale(1.3,1,1);
         this.scene.rotate(Math.PI, 0,1,0);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
         this.scene.rotate(Math.PI/4, 0, 0, 1);
