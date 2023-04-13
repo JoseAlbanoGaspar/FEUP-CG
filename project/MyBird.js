@@ -1,4 +1,4 @@
-import {CGFobject,  CGFappearance} from '../lib/CGF.js';
+import {CGFobject,  CGFappearance, CGFshader} from '../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 import { MyCone } from './MyCone.js';
 import { MyWings } from './MyWings.js';
@@ -19,6 +19,9 @@ export class MyBird extends CGFobject {
         this.beak = new MyCone(scene,30,10);
         this.wingLeft = new MyWings(scene, true);
         this.wingRight = new MyWings(scene, false);
+
+        this.shader = new CGFshader(scene.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag")
+        this.shader.setUniformsValues({ normScale: 1, timeFactor: 0 });
 
         let color = this.scene.hexToRgbA('#FF0000');
         let red = new CGFappearance(this.scene);
@@ -47,7 +50,9 @@ export class MyBird extends CGFobject {
             "BEAK" : yellow
         };
         
+        this.heigth = 0;
         this.initBuffers();
+        scene.setUpdatePeriod(50);
 	}
 
     enableNormalViz(){
@@ -60,7 +65,12 @@ export class MyBird extends CGFobject {
         this.eye.disableNormalViz();
     }
 
+    update(t){
+        this.heigth = Math.sin(2 * Math.PI / 10 * (t / 100 % 10));
+    }
+
     display(){
+        this.scene.translate(0, this.heigth, 0);
         this.colors["BODY"].apply();
         this.scene.pushMatrix();
         this.body.display();
