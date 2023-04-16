@@ -1,5 +1,5 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFtexture } from "../lib/CGF.js";
-import { MyPlane } from "./MyPlane.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFtexture } from "../lib/CGF.js";
+import { MyTerrain } from "./MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 
@@ -34,16 +34,10 @@ export class MyScene extends CGFscene {
 
     //loading textures
     this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
-    this.texture = new CGFtexture(this, "images/terrain.jpg");
-
-    //creating materials
-    this.appearance = new CGFappearance(this);
-    this.appearance.setTexture(this.texture);
-    this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
+    this.terrain = new MyTerrain(this, this.texture, this.texture2);
     this.bird = new MyBird(this);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     
@@ -150,16 +144,10 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    this.pushMatrix();
-    this.appearance.apply();
-    this.translate(0,-100,0);
-    this.scale(400,400,400);
-    this.rotate(-Math.PI/2.0,1,0,0);
-    this.plane.display();
-    this.popMatrix();
+    this.terrain.display();    
+    this.panoramaSphere.display(this.camera.position);
     
-    this.panoramaSphere.display();
-
+    //this.setActiveShader(this.shaders[0]);
     this.pushMatrix();
     this.bird.display();
     this.popMatrix();
