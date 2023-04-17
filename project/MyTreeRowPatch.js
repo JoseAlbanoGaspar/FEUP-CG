@@ -18,9 +18,10 @@ export class MyTreeRowPatch extends CGFobject {
     	this.textures = [new CGFtexture(scene, "images/billboardtree.png"),
                         new CGFtexture(scene, "images/billboardtree2.png"),
                         new CGFtexture(scene, "images/billboardtree3.png"),
+                        new CGFtexture(scene, "images/heightmap.jpg")
                         ]    
     	for(let i = 0; i < 6; i++){
-            this.trees.push(new MyBillboard(scene, this.textures[this.getRandomNumber(0,2)]));
+            this.trees.push(new MyBillboard(scene, this.textures[this.getRandomNumber(0,2)], this.textures[3]));
             this.randomX.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
             this.randomZ.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
         }

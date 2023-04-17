@@ -42,7 +42,6 @@ export class MyScene extends CGFscene {
     this.terrain = new MyTerrain(this, this.texture, this.texture2);
     this.bird = new MyBird(this);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
-    this.billboard = new MyBillboard(this);
     this.patch = new MyTreeRowPatch(this);
     this.patch2 = new MyTreeGroupPatch(this);
     this.enableTextures(true);
@@ -153,9 +152,6 @@ export class MyScene extends CGFscene {
     this.pushMatrix();
     this.bird.display();
     this.popMatrix();
-    
-    let billboardPos = vec3.fromValues(10,-105 ,10);
-    this.billboard.display(billboardPos, this.camera.position);
 
     let patchPos = vec3.fromValues(40,-105 ,40);
     this.patch.display(patchPos, this.camera.position);

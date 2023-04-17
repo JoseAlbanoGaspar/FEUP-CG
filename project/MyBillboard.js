@@ -9,14 +9,13 @@ import { MyPlane } from "./MyPlane.js";
 export class MyBillboard extends CGFobject {
     
 
-	constructor(scene, texture) {
+	constructor(scene, texture, heigthMap) {
 		super(scene);
         this.quad = new MyPlane(scene,30);
-        
-        //this.texture = new CGFtexture(scene, "images/billboardtree.png");
+    
         this.texture = texture;
-        this.texture2 = new CGFtexture(scene, "images/heightmap.jpg");
-        
+        //this.texture2 = new CGFtexture(scene, "images/heightmap.jpg");
+        this.texture2 = heigthMap;
     	
         this.materialPlane = new CGFappearance(scene);
         this.materialPlane.setTexture(this.texture);
