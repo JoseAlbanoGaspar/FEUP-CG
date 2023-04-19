@@ -148,11 +148,11 @@ export class MyScene extends CGFscene {
 
     this.terrain.display();    
     this.panoramaSphere.display(this.camera.position);
-    
-    //this.setActiveShader(this.shaders[0]);
+
     this.pushMatrix();
-    //this.bird.display();
-    
+    this.bird.display();
+    this.popMatrix();
+    this.pushMatrix();
     this.nest.display();
     this.popMatrix();
 
