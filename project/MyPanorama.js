@@ -16,6 +16,7 @@ export class MyPanorama extends CGFobject {
         this.panoramaAppearence.setTexture(texture);
         this.panoramaAppearence.setAmbient(1,1,1,0);
         this.panoramaAppearence.setDiffuse(0.5,0.5,0.5,1);
+        this.panoramaAppearence.setEmission(1,1,1,0.2);
 
         this.initBuffers();
 	}
@@ -28,9 +29,10 @@ export class MyPanorama extends CGFobject {
         this.invertSphere.disableNormalViz();
     }
 
-    display(){
+    display(center){
         this.scene.pushMatrix();
         this.panoramaAppearence.apply();
+        this.scene.translate(center[0],center[1],center[2]);
         this.scene.scale(200,200,200);
         this.invertSphere.display();
         this.scene.popMatrix();
