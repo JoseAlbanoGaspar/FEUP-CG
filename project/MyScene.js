@@ -38,7 +38,6 @@ export class MyScene extends CGFscene {
     
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
     this.bird = new MyBird(this, 0, 3, 0, 0, 0);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.terrain = new MyTerrain(this, this.texture, this.texture2);
