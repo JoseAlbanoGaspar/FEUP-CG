@@ -26,7 +26,7 @@ export class MyTreeGroupPatch extends CGFobject {
         this.shader.setUniformsValues({uSampler2 : 1});
 
     	for(let i = 0; i < 9; i++){
-            this.trees.push(new MyBillboard(scene, this.textures[this.getRandomNumber(0,2)], this.textures[3], this.shader));
+            this.trees.push(new MyBillboard(scene, this.textures[this.getRandomNumber(0,2)], this.textures[3], this.shader, this.getRandomNumber(12, 20)));
             this.randomX.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
             this.randomZ.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
         }
@@ -57,7 +57,7 @@ export class MyTreeGroupPatch extends CGFobject {
         for (let i = 0; i < 3; i++) {
             posZ = initPos[2];
             for (let j = 0; j < 3; j++) {
-                let idx = 3 * i + j
+                let idx = 3 * i + j;
                 let newPos = vec3.fromValues(posX + this.randomX[idx], posY, posZ + this.randomZ[idx]);
                 this.trees[idx].display(newPos, cameraPos);
                 posZ += distance;

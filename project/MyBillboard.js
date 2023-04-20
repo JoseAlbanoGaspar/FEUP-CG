@@ -9,7 +9,7 @@ import { MyPlane } from "./MyPlane.js";
 export class MyBillboard extends CGFobject {
     
 
-	constructor(scene, texture, heigthMap, shader) {
+	constructor(scene, texture, heigthMap, shader, heigth) {
 		super(scene);
         this.quad = new MyPlane(scene,30);
     
@@ -20,6 +20,8 @@ export class MyBillboard extends CGFobject {
         this.materialPlane = new CGFappearance(scene);
         this.materialPlane.setTexture(this.texture);
         this.shader = shader;
+        this.treeHeight = heigth;
+        this.treeWidth = 10;
         this.initBuffers();
 	}
 
@@ -47,11 +49,12 @@ export class MyBillboard extends CGFobject {
         let rotationAxis = vec3.create();
         vec3.cross(rotationAxis, vec3.fromValues(0, 0, 1), aux);
         
-        this.scene.translate(quadPos[0], quadPos[1], quadPos[2]);  // position of tree
-        this.scene.rotate(alpha, rotationAxis[0], rotationAxis[1],rotationAxis[2]);
-        this.scene.scale(10, 10, 10);  // y gets tree height
+        this.scene.translate(quadPos[0] + 5, quadPos[1], quadPos[2]);  // position of tree
+        this.scene.scale(this.treeWidth, this.treeHeight, this.treeWidth);  // y gets tree height
         this.scene.translate(0,0.5,0);  //base of the tree hits the ground
-        this.shader.setUniformsValues({height : quadPos[2]});
+        this.scene.rotate(alpha, rotationAxis[0], rotationAxis[1],rotationAxis[2]);
+
+        this.shader.setUniformsValues({x : (quadPos[0] + this.treeWidth / 2 + 200.0) / 400.0, z: (quadPos[2] + this.treeWidth / 2 + 200.0) / 400.0, height : this.treeHeight});
         this.quad.display();
         
         this.scene.popMatrix();

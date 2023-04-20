@@ -6,6 +6,8 @@ uniform mat4 uMVMatrix;
 uniform mat4 uPMatrix;
 uniform sampler2D uSampler2;
 uniform float height;
+uniform float x;
+uniform float z;
 
 
 varying vec2 vTextureCoord;
@@ -13,14 +15,12 @@ varying float zOffset;
 
 void main() {
 
-    vec4 grayColor = texture2D(uSampler2, vec2(aTextureCoord.s / 400.0, aTextureCoord.t / 400.0));
+    vec4 grayColor = texture2D(uSampler2, vec2(x, z));
     
-    //define altitude
-    zOffset = (grayColor.r *0.25);
-    vec3 newPosition = vec3(aVertexPosition.x, aVertexPosition.y, aVertexPosition.z  );  // 0.25 is the maximum height*/
-	vec4 aux = uMVMatrix * vec4(newPosition, 1.0);
-    aux.y += height; 
-    gl_Position = uPMatrix * aux;
+    zOffset = grayColor.r * 0.25;
+    vec3 newPosition = vec3(aVertexPosition.x, aVertexPosition.y /*+ zOffset*/, aVertexPosition.z );  // 0.25 is the maximum height
+	 
+    gl_Position = uPMatrix * uMVMatrix * vec4(newPosition, 1.0);
 
 	vTextureCoord = vec2(aTextureCoord.s, aTextureCoord.t);
 

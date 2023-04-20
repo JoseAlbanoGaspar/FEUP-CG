@@ -43,6 +43,7 @@ export class MyScene extends CGFscene {
     this.bird = new MyBird(this);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.patch = new MyTreeGroupPatch(this);
+    this.row = new MyTreeRowPatch(this);
     this.enableTextures(true);
 
   }
@@ -144,7 +145,7 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-
+    
     this.terrain.display();    
     this.panoramaSphere.display(this.camera.position);
 
@@ -152,8 +153,17 @@ export class MyScene extends CGFscene {
     //this.bird.display();
     this.popMatrix();
 
-    let patchPos = vec3.fromValues(40,0 ,40);
-    this.patch.display(patchPos, this.camera.position);
+    let treePos = vec3.fromValues(-90,-62 ,-65);
+    this.patch.display(treePos, this.camera.position);
+    treePos = vec3.fromValues(-90,-62 ,-30);
+    this.patch.display(treePos, this.camera.position);
+    treePos = vec3.fromValues(-100,-62 ,-45);
+    this.row.display(treePos, this.camera.position);
+    treePos = vec3.fromValues(-70,-62 ,-65);
+    this.pushMatrix();
+    this.rotate(- Math.PI / 12, 0, 1, 0);
+    this.row.display(treePos, this.camera.position);
+    this.popMatrix();
     // ---- END Primitive drawing section
   }
 }

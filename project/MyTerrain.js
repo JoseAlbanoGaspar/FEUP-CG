@@ -30,10 +30,10 @@ export class MyTerrain extends CGFobject {
     display() {
 		this.scene.pushMatrix();
         this.materialPlane.apply();
-		//this.scene.translate(0,-100,0);
+		this.scene.translate(0,-100,0);
 		this.scene.scale(400,400,400);
 		this.scene.rotate(-Math.PI/2.0,1,0,0);
-		//this.scene.setActiveShader(this.shader);
+		this.scene.setActiveShader(this.shader);
     	this.texture2.bind(1);
 		this.texture3.bind(2);
         this.terrain.display();
