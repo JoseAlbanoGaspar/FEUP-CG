@@ -38,10 +38,10 @@ export class MyScene extends CGFscene {
     
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.bird = new MyBird(this, 0, 3, 0, 0, 0);
+    this.bird = new MyBird(this, 0, 10, 3, 3, 3);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.terrain = new MyTerrain(this, this.texture, this.texture2);
-    this.bird = new MyBird(this);
+    //this.bird = new MyBird(this);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.nest = new MyNest(this, 3, 30, 30);
     
@@ -129,7 +129,6 @@ export class MyScene extends CGFscene {
 	update(t) {
     this.bird.update(t);
     this.checkKeys();
-		
 	}
 
   display() {

@@ -10,7 +10,7 @@ import { MyWings } from './MyWings.js';
  */
 export class MyBird extends CGFobject {
 
-	constructor(scene) {
+	constructor(scene, ang, velocity, pos_x, pos_y, pos_z) {
 		super(scene);
         this.body = new MySphere(scene, 3, 30, 30);
         this.eye = new MySphere(scene, 0.5, 15, 15);
@@ -49,11 +49,11 @@ export class MyBird extends CGFobject {
         };
         
         this.heigth = 0;
-        //this.ang = ang;
-        this.velocity = 10;
-        //this.pos_x = pos_x;
-        //this.pos_y = pos_y;
-        //this.pos_z = pos_z;
+        this.ang = ang;
+        this.pos_x = pos_x;
+        this.pos_y = pos_y;
+        this.pos_z = pos_z;
+        this.velocity = velocity;
         //this.time = 0;
         //this.wingRotation = 0;
         this.initBuffers();
@@ -71,20 +71,23 @@ export class MyBird extends CGFobject {
     }
 
     update(t){
-        //let deltat = t-this.time;
-        //let aceleration = this.velocity/deltat;
-        //this.heigth = Math.sin(2 * Math.PI / 10 * (t / 100 % 10));
+        let deltat = t-this.time;
+        let aceleration = this.velocity/deltat;
+        this.heigth = Math.sin(2 * Math.PI / 10 * (t / 100 % 10));
 
         //this.wingRotation = (Math.PI / 6) * Math.sin((2 * Math.PI / this.velocity) * (t / 500 % this.velocity));
         this.wingRotation = Math.sin((Math.PI / 6) * (t / (1000 / this.velocity))) * (Math.PI / 6);
     
-       //this.pos_x = this.pos_x + Math.sin(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
-       //this.pos_y = this.pos_y + Math.cos(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
-       //this.pos_z = this.pos_z + Math.cos(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
+        this.pos_x += 0.5;
+        this.pos_y += 0.5;
+        this.pos_z += 0.5;
+        //this.pos_x = this.pos_x + Math.sin(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
+        //this.pos_y = this.pos_y + Math.cos(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
+        //this.pos_z = this.pos_z + Math.cos(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
     }
 
     display(){
-        this.scene.translate(0, this.heigth, 0);
+        this.scene.translate(this.pos_x, this.pos_y, this.pos_z);
         this.colors["BODY"].apply();
         this.scene.pushMatrix();
         this.body.display();
