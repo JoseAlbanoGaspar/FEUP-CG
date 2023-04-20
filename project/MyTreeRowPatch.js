@@ -25,6 +25,8 @@ export class MyTreeRowPatch extends CGFobject {
             this.randomX.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
             this.randomZ.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
         }
+
+        
         
 	}
 

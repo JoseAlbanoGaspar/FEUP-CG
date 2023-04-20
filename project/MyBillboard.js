@@ -14,7 +14,7 @@ export class MyBillboard extends CGFobject {
         this.quad = new MyPlane(scene,30);
     
         this.texture = texture;
-        //this.texture2 = new CGFtexture(scene, "images/heightmap.jpg");
+        this.texture2 = new CGFtexture(scene, "images/heightmap.jpg");
         this.texture2 = heigthMap;
     	
         this.materialPlane = new CGFappearance(scene);
@@ -55,6 +55,7 @@ export class MyBillboard extends CGFobject {
         this.scene.scale(10, 10, 10);  // y gets tree height
         this.scene.translate(0,0.5,0);  //base of the tree hits the ground
         this.scene.setActiveShader(this.shader);
+        this.shader.setUniformsValues({height : quadPos[2]});
         this.quad.display();
         this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
