@@ -1,4 +1,4 @@
-import {CGFobject, CGFtexture} from '../lib/CGF.js';
+import {CGFobject, CGFtexture, CGFshader} from '../lib/CGF.js';
 import { MyBillboard } from "./MyBillboard.js";
 
 /**
@@ -19,9 +19,13 @@ export class MyTreeRowPatch extends CGFobject {
                         new CGFtexture(scene, "images/billboardtree2.png"),
                         new CGFtexture(scene, "images/billboardtree3.png"),
                         new CGFtexture(scene, "images/heightmap.jpg")
-                        ]    
+                        ];
+        
+        this.shader = new CGFshader(this.scene.gl, "shaders/bilboardtree.vert", "shaders/bilboardtree.frag")
+        this.shader.setUniformsValues({uSampler2 : 1});
+
     	for(let i = 0; i < 6; i++){
-            this.trees.push(new MyBillboard(scene, this.textures[this.getRandomNumber(0,2)], this.textures[3]));
+            this.trees.push(new MyBillboard(scene, this.textures[this.getRandomNumber(0,2)], this.textures[3], this.shader));
             this.randomX.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
             this.randomZ.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
         }
@@ -44,6 +48,8 @@ export class MyTreeRowPatch extends CGFobject {
 
     display(initPos, cameraPos) {
         this.scene.pushMatrix();
+        this.scene.setActiveShader(this.shader);
+        this.textures[3].bind(1);
         let distance = 10;
         let posX = initPos[0];
         let posY = initPos[1];
@@ -53,6 +59,7 @@ export class MyTreeRowPatch extends CGFobject {
             this.trees[i].display(newPos, cameraPos);
             posZ += distance;
         }
+        this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
       }
       

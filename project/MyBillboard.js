@@ -1,4 +1,4 @@
-import {CGFobject, CGFtexture, CGFappearance, CGFshader } from '../lib/CGF.js';
+import {CGFobject, CGFtexture, CGFappearance } from '../lib/CGF.js';
 import { MyPlane } from "./MyPlane.js";
 
 /**
@@ -9,7 +9,7 @@ import { MyPlane } from "./MyPlane.js";
 export class MyBillboard extends CGFobject {
     
 
-	constructor(scene, texture, heigthMap) {
+	constructor(scene, texture, heigthMap, shader) {
 		super(scene);
         this.quad = new MyPlane(scene,30);
     
@@ -19,10 +19,7 @@ export class MyBillboard extends CGFobject {
     	
         this.materialPlane = new CGFappearance(scene);
         this.materialPlane.setTexture(this.texture);
-
-        this.shader = new CGFshader(this.scene.gl, "shaders/bilboardtree.vert", "shaders/bilboardtree.frag")
-		this.shader.setUniformsValues({uSampler2 : 1});
-
+        this.shader = shader;
         this.initBuffers();
 	}
 
@@ -54,10 +51,9 @@ export class MyBillboard extends CGFobject {
         this.scene.rotate(alpha, rotationAxis[0], rotationAxis[1],rotationAxis[2]);
         this.scene.scale(10, 10, 10);  // y gets tree height
         this.scene.translate(0,0.5,0);  //base of the tree hits the ground
-        this.scene.setActiveShader(this.shader);
         this.shader.setUniformsValues({height : quadPos[2]});
         this.quad.display();
-        this.scene.setActiveShader(this.scene.defaultShader);
+        
         this.scene.popMatrix();
       }
       

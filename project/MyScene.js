@@ -42,7 +42,7 @@ export class MyScene extends CGFscene {
     this.terrain = new MyTerrain(this, this.texture, this.texture2);
     this.bird = new MyBird(this);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
-    this.patch = new MyTreeRowPatch(this);
+    this.patch = new MyTreeGroupPatch(this);
     this.enableTextures(true);
 
   }

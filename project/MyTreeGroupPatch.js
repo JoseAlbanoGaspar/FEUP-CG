@@ -1,4 +1,4 @@
-import {CGFobject, CGFtexture} from '../lib/CGF.js';
+import { CGFobject, CGFtexture, CGFshader } from '../lib/CGF.js';
 import { MyBillboard } from "./MyBillboard.js";
 
 /**
@@ -15,13 +15,18 @@ export class MyTreeGroupPatch extends CGFobject {
         this.distance = 10;
         this.randomX =  [];
         this.randomZ = [];
-        this.textures = [new CGFtexture(scene, "images/billboardtree.png"),
+        this.textures = [
+                        new CGFtexture(scene, "images/billboardtree.png"),
                         new CGFtexture(scene, "images/billboardtree2.png"),
                         new CGFtexture(scene, "images/billboardtree3.png"),
                         new CGFtexture(scene, "images/heightmap.jpg")
-                        ]    
+                        ];
+        
+        this.shader = new CGFshader(this.scene.gl, "shaders/bilboardtree.vert", "shaders/bilboardtree.frag")
+        this.shader.setUniformsValues({uSampler2 : 1});
+
     	for(let i = 0; i < 9; i++){
-            this.trees.push(new MyBillboard(scene, this.textures[this.getRandomNumber(0,2)], this.textures[3]));
+            this.trees.push(new MyBillboard(scene, this.textures[this.getRandomNumber(0,2)], this.textures[3], this.shader));
             this.randomX.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
             this.randomZ.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
         }
@@ -42,13 +47,16 @@ export class MyTreeGroupPatch extends CGFobject {
 
     display(initPos, cameraPos) {
         this.scene.pushMatrix();
+        this.scene.setActiveShader(this.shader);
+        this.textures[3].bind(1);
+
         let distance = 10;
         let posX = initPos[0];
         let posY = initPos[1];
         let posZ = initPos[2];
-        for(let i = 0; i < 3; i++){
+        for (let i = 0; i < 3; i++) {
             posZ = initPos[2];
-            for(let j = 0; j < 3; j++){
+            for (let j = 0; j < 3; j++) {
                 let idx = 3 * i + j
                 let newPos = vec3.fromValues(posX + this.randomX[idx], posY, posZ + this.randomZ[idx]);
                 this.trees[idx].display(newPos, cameraPos);
@@ -56,6 +64,7 @@ export class MyTreeGroupPatch extends CGFobject {
             }
             posX += distance;
         }
+        this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
       }
       
