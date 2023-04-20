@@ -44,7 +44,7 @@ export class MyWings extends CGFobject {
 
         this.flag ? this.scene.rotate(-Math.PI / 10, 0, 0, 1): this.scene.rotate(Math.PI / 10, 0, 0, 1);
         this.scene.rotate(3 * Math.PI / 2, 1, 0, 0);
-        this.scene.translate(1, 0, 0);
+        this.scene.translate(1.2, 0, 0);
         this.triangle.display();
         this.scene.popMatrix();
         
