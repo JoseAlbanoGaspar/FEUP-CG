@@ -41,10 +41,8 @@ export class MyScene extends CGFscene {
     this.bird = new MyBird(this, 0, 10, 3, 3, 3);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.terrain = new MyTerrain(this, this.texture, this.texture2);
-    //this.bird = new MyBird(this);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.nest = new MyNest(this, 3, 30, 30);
-    
 
     this.enableTextures(true);
 
@@ -103,21 +101,25 @@ export class MyScene extends CGFscene {
     if (this.gui.isKeyPressed("KeyW")) {
       text += " W ";
       keyPressed = true;
+      this.bird.accelerate("W");
     }
 
     if (this.gui.isKeyPressed("KeyS")) {
       text += " S ";
       keyPressed = true;
+      this.bird.accelerate("S");
     }
 
     if (this.gui.isKeyPressed("KeyA")) {
       text += " A ";
       keyPressed = true;
+      this.bird.turn("A");
     }
 
     if (this.gui.isKeyPressed("KeyD")) {
       text += " D ";
       keyPressed = true;
+      this.bird.turn("D");
     }
 
     if (keyPressed){

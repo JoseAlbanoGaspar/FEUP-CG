@@ -71,23 +71,43 @@ export class MyBird extends CGFobject {
     }
 
     update(t){
-        let deltat = t-this.time;
-        let aceleration = this.velocity/deltat;
+        //let deltat = t-this.time;
+        //let aceleration = this.velocity/deltat;
         this.heigth = Math.sin(2 * Math.PI / 10 * (t / 100 % 10));
 
         //this.wingRotation = (Math.PI / 6) * Math.sin((2 * Math.PI / this.velocity) * (t / 500 % this.velocity));
         this.wingRotation = Math.sin((Math.PI / 6) * (t / (1000 / this.velocity))) * (Math.PI / 6);
     
-        this.pos_x += 0.5;
-        this.pos_y += 0.5;
-        this.pos_z += 0.5;
+        this.pos_x += Math.cos(this.ang);
+        this.pos_y += Math.sin(this.ang);
+        this.pos_z += Math.cos(-this.ang);
         //this.pos_x = this.pos_x + Math.sin(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
         //this.pos_y = this.pos_y + Math.cos(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
         //this.pos_z = this.pos_z + Math.cos(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
     }
 
+    turn(key){
+        if(key=="D"){
+            this.ang += Math.PI/12;
+        }
+
+        else if(key=="A"){
+            this.ang -= Math.PI/12;
+        }
+    }
+
+    accelerate(key) {
+        if(key=="W"){
+            this.velocity += 0.2;
+        }
+
+        else if(key=="S"){
+            this.velocity -= 0.2;
+        }
+    }
+
     display(){
-        this.scene.translate(this.pos_x, this.pos_y, this.pos_z);
+        this.scene.translate(this.pos_x, this.pos_y+this.heigth, this.pos_z);
         this.colors["BODY"].apply();
         this.scene.pushMatrix();
         this.body.display();
