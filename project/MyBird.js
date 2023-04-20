@@ -106,6 +106,14 @@ export class MyBird extends CGFobject {
         }
     }
 
+    reset(key) {
+        this.pos_x = 0;
+        this.pos_y = 0;
+        this.pos_z = 0;
+        this.velocity = 0;
+        this.ang = 0;
+    }
+
     display(){
         this.scene.translate(this.pos_x, this.pos_y+this.heigth, this.pos_z);
         this.colors["BODY"].apply();

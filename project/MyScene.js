@@ -122,6 +122,12 @@ export class MyScene extends CGFscene {
       this.bird.turn("D");
     }
 
+    if (this.gui.isKeyPressed("KeyR")){
+      text += " R ";
+      keyPressed = true;
+      this.bird.reset("R");
+    }
+
     if (keyPressed){
       console.log(text);
     }
