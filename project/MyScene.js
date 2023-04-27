@@ -125,7 +125,7 @@ export class MyScene extends CGFscene {
 
   // called periodically (as per setUpdatePeriod() in init())
 	update(t) {
-    this.bird.update(t);
+    //this.bird.update(t);
     this.checkKeys();
 		
 	}

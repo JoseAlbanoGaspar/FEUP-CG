@@ -2,6 +2,7 @@ import {CGFobject,  CGFappearance, CGFshader} from '../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 import { MyCone } from './MyCone.js';
 import { MyWings } from './MyWings.js';
+import { MyPaw } from './MyPaw.js';
 
 /**
  * MyBird
@@ -19,6 +20,7 @@ export class MyBird extends CGFobject {
         this.beak = new MyCone(scene,30,10);
         this.wingLeft = new MyWings(scene, true);
         this.wingRight = new MyWings(scene, false);
+        this.paw = new MyPaw(scene);
 
         this.shader = new CGFshader(scene.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag")
         this.shader.setUniformsValues({ normScale: 1, timeFactor: 0 });
@@ -124,6 +126,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.scene.scale(1.5, 1.5, 1.5);
         this.wingRight.display();
+        this.paw.display();
         this.scene.popMatrix();
     }
 }
