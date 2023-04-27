@@ -78,21 +78,23 @@ export class MyBird extends CGFobject {
         //this.wingRotation = (Math.PI / 6) * Math.sin((2 * Math.PI / this.velocity) * (t / 500 % this.velocity));
         this.wingRotation = Math.sin((Math.PI / 6) * (t / (1000 / this.velocity))) * (Math.PI / 6);
     
-        this.pos_x += Math.cos(this.ang);
-        this.pos_y += Math.sin(this.ang);
-        this.pos_z += Math.cos(-this.ang);
+        this.pos_x += this.velocity * Math.cos(this.ang);
+        this.pos_z += this.velocity * Math.sin(this.ang);
+        //this.pos_x += Math.cos(this.ang);
+        //this.pos_y += Math.sin(this.ang);
+        //this.pos_z += Math.cos(-this.ang);
         //this.pos_x = this.pos_x + Math.sin(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
         //this.pos_y = this.pos_y + Math.cos(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
         //this.pos_z = this.pos_z + Math.cos(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
     }
-
+    
     turn(key){
         if(key=="D"){
-            this.ang += Math.PI/12;
+            this.ang += Math.sin(time * this.ang) / 2;
         }
 
         else if(key=="A"){
-            this.ang -= Math.PI/12;
+            this.ang -= Math.sin(time * this.ang) / 2;
         }
     }
 
@@ -106,12 +108,12 @@ export class MyBird extends CGFobject {
         }
     }
 
-    reset(key) {
+    reset() {
         this.pos_x = 0;
         this.pos_y = 0;
         this.pos_z = 0;
         this.velocity = 0;
-        this.ang = 0;
+        this.ang = 1;
     }
 
     display(){
