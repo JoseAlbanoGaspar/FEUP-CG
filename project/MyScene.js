@@ -32,6 +32,8 @@ export class MyScene extends CGFscene {
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.selectedShader = 0;
+    this.speedFactor = 1;
+    this.otherScaleFactor = 1;
 
     //loading textures
     this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
@@ -159,6 +161,7 @@ export class MyScene extends CGFscene {
     this.panoramaSphere.display(this.camera.position);
 
     this.pushMatrix();
+    this.scale(this.otherScaleFactor,this.otherScaleFactor,this.otherScaleFactor);
     this.bird.display();
     this.popMatrix();
     this.pushMatrix();
