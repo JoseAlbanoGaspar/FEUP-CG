@@ -54,8 +54,8 @@ export class MyBird extends CGFobject {
         this.pos_y = pos_y;
         this.pos_z = pos_z;
         this.velocity = velocity;
-        //this.time = 0;
-        //this.wingRotation = 0;
+        this.time = 0;
+        this.wingRotation;
         this.initBuffers();
         scene.setUpdatePeriod(50);
 	}
@@ -71,30 +71,24 @@ export class MyBird extends CGFobject {
     }
 
     update(t){
-        //let deltat = t-this.time;
-        //let aceleration = this.velocity/deltat;
+
         this.heigth = Math.sin(2 * Math.PI / 10 * (t / 100 % 10));
 
-        //this.wingRotation = (Math.PI / 6) * Math.sin((2 * Math.PI / this.velocity) * (t / 500 % this.velocity));
         this.wingRotation = Math.sin((Math.PI / 6) * (t / (1000 / this.velocity))) * (Math.PI / 6);
     
         this.pos_x += this.velocity * Math.cos(this.ang);
         this.pos_z += this.velocity * Math.sin(this.ang);
-        //this.pos_x += Math.cos(this.ang);
-        //this.pos_y += Math.sin(this.ang);
-        //this.pos_z += Math.cos(-this.ang);
-        //this.pos_x = this.pos_x + Math.sin(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
-        //this.pos_y = this.pos_y + Math.cos(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
-        //this.pos_z = this.pos_z + Math.cos(this.ang) + this.velocity*deltat + (aceleration/2)*deltat**2;
+        this.time = t;
+    
     }
     
     turn(key){
         if(key=="D"){
-            this.ang += Math.sin(time * this.ang) / 2;
+            this.ang += Math.cos(this.time * this.ang) / 2;
         }
 
         else if(key=="A"){
-            this.ang -= Math.sin(time * this.ang) / 2;
+            this.ang -= Math.cos(this.time * this.ang) / 2;
         }
     }
 
@@ -118,6 +112,7 @@ export class MyBird extends CGFobject {
 
     display(){
         this.scene.translate(this.pos_x, this.pos_y+this.heigth, this.pos_z);
+        this.scene.rotate(this.ang, 0, 1, 0);
         this.colors["BODY"].apply();
         this.scene.pushMatrix();
         this.body.display();
