@@ -1,4 +1,4 @@
-import {CGFobject,  CGFappearance, CGFshader} from '../lib/CGF.js';
+import {CGFobject,  CGFappearance, CGFshader, CGFtexture} from '../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 import { MyCone } from './MyCone.js';
 import { MyWings } from './MyWings.js';
@@ -25,12 +25,13 @@ export class MyBird extends CGFobject {
         this.shader = new CGFshader(scene.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag")
         this.shader.setUniformsValues({ normScale: 1, timeFactor: 0 });
 
-        let color = this.scene.hexToRgbA('#FF0000');
+        let color = this.scene.hexToRgbA('#FFFFFF');
         let red = new CGFappearance(this.scene);
         red.setAmbient(color[0], color[1], color[2], 1.0);
         red.setSpecular(1, 1, 1, 1.0);
         red.setDiffuse(color[0], color[1], color[2], 1.0);
         red.setShininess(10.0);
+        red.setTexture(new CGFtexture(scene, 'images/bird-body-texture.jpg'));
 
         color = this.scene.hexToRgbA('#000000');
         let black = new CGFappearance(this.scene);

@@ -46,7 +46,7 @@ export class MyPaw extends CGFobject {
         this.scene.scale(0.5, 0.5, 0.5);
         this.finger.display();
 
-        this.scene.translate(-3, -1.5 ,0);
+        this.scene.translate(-2.6, -1.5 ,0);
         this.finger.display();
         this.scene.popMatrix();
         
