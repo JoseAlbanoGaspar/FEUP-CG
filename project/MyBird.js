@@ -125,6 +125,7 @@ export class MyBird extends CGFobject {
         this.wingLeft.display();
         this.scene.popMatrix();
 
+        //TER UM PIVOT À VOLTA DO QUAL AS ASAS RODAM
         this.scene.pushMatrix();
         this.scene.rotate(-this.wingRotation, 1, 0, 0);
         this.scene.translate(-4.5,-1,3);

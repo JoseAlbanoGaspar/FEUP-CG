@@ -3,6 +3,7 @@ import { MyTerrain } from "./MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 import { MyNest } from "./MyNest.js";
+import { MyBirdEggs } from "./MyBirdEggs.js";
 
 /**
  * MyScene
@@ -44,6 +45,8 @@ export class MyScene extends CGFscene {
     this.bird = new MyBird(this);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.nest = new MyNest(this, 3, 30, 30);
+
+    this.eggs = new MyBirdEggs(this, 1.3);
     
 
     this.enableTextures(true);
@@ -156,6 +159,9 @@ export class MyScene extends CGFscene {
     this.popMatrix();
     this.pushMatrix();
     this.nest.display();
+    this.popMatrix();
+    this.pushMatrix();
+    this.eggs.display();
     this.popMatrix();
 
     // ---- END Primitive drawing section
