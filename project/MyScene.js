@@ -46,8 +46,13 @@ export class MyScene extends CGFscene {
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.nest = new MyNest(this, 3, 30, 30);
 
-    this.eggs = new MyBirdEggs(this, 1.3);
-    
+    this.egg = new MyBirdEggs(this, 1.3);
+    /*
+    this.allEggs = [];
+    for(let i = 1; i < 6; i++){
+      this.allEggs[i] = new MyBirdEggs(this, 1.3);
+    }
+    */
 
     this.enableTextures(true);
 
@@ -161,8 +166,17 @@ export class MyScene extends CGFscene {
     this.nest.display();
     this.popMatrix();
     this.pushMatrix();
-    this.eggs.display();
+    this.egg.display();
     this.popMatrix();
+   
+    /*
+    for(let i = 0; i < this.allEggs.length; i++){
+      this.pushMatrix();
+      this.translate(10*i + 10, 0, 0);
+      this.allEggs[i].display();
+      this.popMatrix();
+    }
+    */
 
     // ---- END Primitive drawing section
   }

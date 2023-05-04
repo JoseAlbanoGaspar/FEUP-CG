@@ -1,4 +1,4 @@
-import {CGFobject,  CGFappearance} from '../lib/CGF.js';
+import {CGFobject,  CGFappearance, CGFtexture} from '../lib/CGF.js';
 import { MySphere } from './MySphere.js';
 import { MySemiSphere } from './MySemiSphere.js';
 
@@ -17,13 +17,14 @@ export class MyBirdEggs extends CGFobject {
 
         this.egg = new MySphere(scene, 2, 30, 20);
 
-        eggText = new CGFtexture(scene, 'images/eggstexture.jpg');
-        this.eggAppearence = new CGFappearance(scene);
-        this.eggAppearence.setTexture(eggText);
-        this.eggAppearence.setAmbient(1,1,1,0);
-        this.eggAppearence.setDiffuse(0.5,0.5,0.5,1);
-        this.eggAppearence.setEmission(1,1,1,0.2);
-        
+        let color = this.scene.hexToRgbA('#FFFFFF');
+        this.eggAppearence = new CGFappearance(this.scene);
+        this.eggAppearence.setAmbient(color[0], color[1], color[2], 1.0);
+        this.eggAppearence.setSpecular(1, 1, 1, 1.0);
+        this.eggAppearence.setDiffuse(color[0], color[1], color[2], 1.0);
+        this.eggAppearence.setShininess(10.0);
+        this.eggAppearence.setTexture(new CGFtexture(scene, 'images/eggstexture.jpg'));
+    
         
         this.initBuffers();
 	}
