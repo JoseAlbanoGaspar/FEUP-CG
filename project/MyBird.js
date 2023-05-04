@@ -76,19 +76,19 @@ export class MyBird extends CGFobject {
         //maybe the 1000/10 change with the velocity
         this.wingRotation = Math.sin((Math.PI / 6) * (t / (1000 / 10))) * (Math.PI / 6);
     
-        this.pos_x += this.velocity * Math.cos(this.ang);
-        this.pos_z += this.velocity * Math.sin(this.ang);
+        this.pos_x += this.velocity * Math.sin(this.ang+Math.PI/2);
+        this.pos_z += this.velocity * Math.cos(this.ang+Math.PI/2);
         this.time = t;
     
     }
     
     turn(key){
         if(key=="D"){
-            this.ang += Math.cos(this.time * this.ang) / 2;
+            this.ang -= 0.1;
         }
 
         else if(key=="A"){
-            this.ang -= Math.cos(this.time * this.ang) / 2;
+            this.ang += 0.1;
         }
     }
 
@@ -98,7 +98,7 @@ export class MyBird extends CGFobject {
         }
 
         else if(key=="S"){
-            this.velocity -= 0.2;
+            this.velocity = Math.max(0, this.velocity - 0.2);
         }
     }
 
