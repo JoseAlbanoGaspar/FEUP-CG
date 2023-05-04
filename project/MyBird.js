@@ -73,8 +73,8 @@ export class MyBird extends CGFobject {
     update(t){
 
         this.heigth = Math.sin(2 * Math.PI / 10 * (t / 100 % 10));
-
-        this.wingRotation = Math.sin((Math.PI / 6) * (t / (1000 / this.velocity))) * (Math.PI / 6);
+        //maybe the 1000/10 change with the velocity
+        this.wingRotation = Math.sin((Math.PI / 6) * (t / (1000 / 10))) * (Math.PI / 6);
     
         this.pos_x += this.velocity * Math.cos(this.ang);
         this.pos_z += this.velocity * Math.sin(this.ang);

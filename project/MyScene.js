@@ -162,6 +162,7 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
     this.scale(this.otherScaleFactor,this.otherScaleFactor,this.otherScaleFactor);
+    //fazer o speed factor
     this.bird.display();
     this.popMatrix();
     this.pushMatrix();
