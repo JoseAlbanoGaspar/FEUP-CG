@@ -10,12 +10,10 @@ import { MySemiSphere } from './MySemiSphere.js';
 export class MyBirdEggs extends CGFobject {
     
 
-	constructor(scene, scaleYY) {
+	constructor(scene, scaleYYPlus, scaleYYMinor) {
 		super(scene);
-        
-        this.scaleYY = scaleYY;
 
-        this.egg = new MySphere(scene, 2, 30, 20);
+        this.egg = new MySphere(scene, 2, 30, 20, false, scaleYYPlus, scaleYYMinor );
 
         let color = this.scene.hexToRgbA('#FFFFFF');
         this.eggAppearence = new CGFappearance(this.scene);
@@ -41,7 +39,6 @@ export class MyBirdEggs extends CGFobject {
         this.scene.pushMatrix();
         this.eggAppearence.apply();
         this.scene.translate(10, 10, 0);
-        this.scene.scale(1, this.scaleYY, 1);
         this.egg.display();
         this.scene.popMatrix();
         /*

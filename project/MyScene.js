@@ -47,7 +47,7 @@ export class MyScene extends CGFscene {
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.nest = new MyNest(this, 3, 30, 30);
 
-    this.egg = new MyBirdEggs(this, 1.3);
+    this.egg = new MyBirdEggs(this, 2, 1.3);
     /*
     this.allEggs = [];
     for(let i = 1; i < 6; i++){
