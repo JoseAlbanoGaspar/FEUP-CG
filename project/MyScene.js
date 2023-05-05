@@ -33,16 +33,17 @@ export class MyScene extends CGFscene {
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.selectedShader = 0;
+    this.speedFactor = 1;
+    this.otherScaleFactor = 1;
 
     //loading textures
     this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
     
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.bird = new MyBird(this, 0, 3, 0, 0, 0);
+    this.bird = new MyBird(this, 1, 0, 3, 3, 3);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.terrain = new MyTerrain(this, this.texture, this.texture2);
-    this.bird = new MyBird(this);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.nest = new MyNest(this, 3, 30, 30);
 
@@ -111,21 +112,31 @@ export class MyScene extends CGFscene {
     if (this.gui.isKeyPressed("KeyW")) {
       text += " W ";
       keyPressed = true;
+      this.bird.accelerate("W");
     }
 
     if (this.gui.isKeyPressed("KeyS")) {
       text += " S ";
       keyPressed = true;
+      this.bird.accelerate("S");
     }
 
     if (this.gui.isKeyPressed("KeyA")) {
       text += " A ";
       keyPressed = true;
+      this.bird.turn("A");
     }
 
     if (this.gui.isKeyPressed("KeyD")) {
       text += " D ";
       keyPressed = true;
+      this.bird.turn("D");
+    }
+
+    if (this.gui.isKeyPressed("KeyR")){
+      text += " R ";
+      keyPressed = true;
+      this.bird.reset("R");
     }
 
     if (keyPressed){
@@ -137,7 +148,6 @@ export class MyScene extends CGFscene {
 	update(t) {
     this.bird.update(t);
     this.checkKeys();
-		
 	}
 
   display() {
@@ -160,6 +170,9 @@ export class MyScene extends CGFscene {
     this.panoramaSphere.display(this.camera.position);
 
     this.pushMatrix();
+    this.scale(this.otherScaleFactor,this.otherScaleFactor,this.otherScaleFactor);
+    //fazer o speed factor
+    this.rotate(Math.PI/4 + Math.PI/2, 0, 1, 0);
     this.bird.display();
     this.popMatrix();
     this.pushMatrix();
