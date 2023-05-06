@@ -9,7 +9,7 @@ import { MyPlane } from "./MyPlane.js";
 export class MyBillboard extends CGFobject {
     
 
-	constructor(scene, texture, heigthMap, shader, heigth) {
+	constructor(scene, texture, heigthMap, heigth) {
 		super(scene);
         this.quad = new MyPlane(scene,30);
     
@@ -18,7 +18,6 @@ export class MyBillboard extends CGFobject {
     	
         this.materialPlane = new CGFappearance(scene);
         this.materialPlane.setTexture(this.texture);
-        this.shader = shader;
         this.treeHeight = heigth;
         this.treeWidth = 10;
         this.initBuffers();
