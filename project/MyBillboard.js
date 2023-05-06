@@ -35,7 +35,7 @@ export class MyBillboard extends CGFobject {
     display(quadPos, cameraPos) {
         this.scene.pushMatrix();
         this.materialPlane.apply();
-        this.texture2.bind(1);
+        //this.texture2.bind(1);
 
         let aux = vec3.create();
         vec3.subtract(aux, cameraPos, quadPos);

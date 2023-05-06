@@ -9,7 +9,7 @@ import { MyBillboard } from "./MyBillboard.js";
 export class MyTreeRowPatch extends CGFobject {
     
 
-	constructor(scene) {
+	constructor(scene, shader) {
 		super(scene); 
         this.trees = []; 
         this.distance = 10;
@@ -21,7 +21,7 @@ export class MyTreeRowPatch extends CGFobject {
                         new CGFtexture(scene, "images/heightmap.jpg")
                         ];
         
-        this.shader = new CGFshader(this.scene.gl, "shaders/bilboardtree.vert", "shaders/bilboardtree.frag")
+        this.shader = shader;
         this.shader.setUniformsValues({uSampler2 : 1});
 
     	for(let i = 0; i < 6; i++){
@@ -48,7 +48,6 @@ export class MyTreeRowPatch extends CGFobject {
 
     display(initPos, cameraPos) {
         this.scene.pushMatrix();
-        this.scene.setActiveShader(this.shader);
         this.textures[3].bind(1);
         let distance = 10;
         let posX = initPos[0];
@@ -59,7 +58,6 @@ export class MyTreeRowPatch extends CGFobject {
             this.trees[i].display(newPos, cameraPos);
             posZ += distance;
         }
-        this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
       }
       
