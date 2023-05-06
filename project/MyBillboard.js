@@ -1,4 +1,4 @@
-import {CGFobject, CGFtexture, CGFappearance } from '../lib/CGF.js';
+import {CGFobject, CGFappearance } from '../lib/CGF.js';
 import { MyPlane } from "./MyPlane.js";
 
 /**
@@ -14,7 +14,6 @@ export class MyBillboard extends CGFobject {
         this.quad = new MyPlane(scene,30);
     
         this.texture = texture;
-        this.texture2 = new CGFtexture(scene, "images/heightmap.jpg");
         this.texture2 = heigthMap;
     	
         this.materialPlane = new CGFappearance(scene);
@@ -54,7 +53,7 @@ export class MyBillboard extends CGFobject {
         this.scene.translate(0,0.5,0);  //base of the tree hits the ground
         this.scene.rotate(alpha, rotationAxis[0], rotationAxis[1],rotationAxis[2]);
 
-        this.shader.setUniformsValues({x : (quadPos[0] + this.treeWidth / 2 + 200.0) / 400.0, z: (quadPos[2] + this.treeWidth / 2 + 200.0) / 400.0, height : this.treeHeight});
+        //this.shader.setUniformsValues({x : (quadPos[0] + this.treeWidth / 2 + 200.0) / 400.0, z: (quadPos[2] + this.treeWidth / 2 + 200.0) / 400.0, height : this.treeHeight});
         this.quad.display();
         
         this.scene.popMatrix();
