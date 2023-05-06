@@ -1,10 +1,11 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFtexture, CGFappearance } from "../lib/CGF.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFtexture } from "../lib/CGF.js";
 import { MyTerrain } from "./MyTerrain.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 import { MyNest } from "./MyNest.js";
 import { MyBirdEggs } from "./MyBirdEggs.js";
-
+import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
+import { MyTreeRowPatch } from "./MyTreeRowPatch.js"; 
 /**
  * MyScene
  * @constructor
@@ -55,6 +56,8 @@ export class MyScene extends CGFscene {
     }
     */
 
+    this.patch = new MyTreeGroupPatch(this);
+    this.row = new MyTreeRowPatch(this);
     this.enableTextures(true);
 
   }
@@ -165,7 +168,7 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-
+    
     this.terrain.display();    
     this.panoramaSphere.display(this.camera.position);
 
@@ -191,6 +194,17 @@ export class MyScene extends CGFscene {
     }
     */
 
+    let treePos = vec3.fromValues(-90,-62 ,-65);
+    this.patch.display(treePos, this.camera.position);
+    treePos = vec3.fromValues(-90,-62 ,-30);
+    this.patch.display(treePos, this.camera.position);
+    treePos = vec3.fromValues(-100,-62 ,-45);
+    this.row.display(treePos, this.camera.position);
+    treePos = vec3.fromValues(-70,-62 ,-65);
+    this.pushMatrix();
+    this.rotate(- Math.PI / 12, 0, 1, 0);
+    this.row.display(treePos, this.camera.position);
+    this.popMatrix();
     // ---- END Primitive drawing section
   }
 }
