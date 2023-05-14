@@ -107,6 +107,10 @@ export class MyBird extends CGFobject {
         }
     }
 
+    down(){
+        this.pos_y -= 1;
+    }
+
     reset() {
         this.pos_x = 0;
         this.pos_y = 0;

@@ -42,19 +42,18 @@ export class MyScene extends CGFscene {
     
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.bird = new MyBird(this, 1, 0, 3, 3, 3);
+    this.bird = new MyBird(this, 1, this.speedFactor, 3, 3, 3);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.terrain = new MyTerrain(this, this.texture, this.texture2);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.nest = new MyNest(this, 3, 30, 30);
 
-    this.egg = new MyBirdEggs(this, 2, 1.3);
-    /*
     this.allEggs = [];
     for(let i = 1; i < 6; i++){
-      this.allEggs[i] = new MyBirdEggs(this, 1.3);
+      this.allEggs.push(new MyBirdEggs(this, 1.4, 1.2));
     }
-    */
+  
+  
     this.billboardShader = new CGFshader(this.gl, "shaders/bilboardtree.vert", "shaders/bilboardtree.frag");
     this.patch = new MyTreeGroupPatch(this, this.billboardShader);
     this.row = new MyTreeRowPatch(this, this.billboardShader); 
@@ -142,6 +141,12 @@ export class MyScene extends CGFscene {
       this.bird.reset("R");
     }
 
+    if (this.gui.isKeyPressed("KeyP")){
+      text += "P";
+      keyPressed = true;
+      this.bird.down();
+    }
+
     if (keyPressed){
       console.log(text);
     }
@@ -181,18 +186,16 @@ export class MyScene extends CGFscene {
     this.pushMatrix();
     this.nest.display();
     this.popMatrix();
-    this.pushMatrix();
-    this.egg.display();
-    this.popMatrix();
-   
-    /*
+    
     for(let i = 0; i < this.allEggs.length; i++){
       this.pushMatrix();
       this.translate(10*i + 10, 0, 0);
       this.allEggs[i].display();
       this.popMatrix();
     }
-    */
+  
+    
+    
     this.setActiveShader(this.billboardShader);
     let treePos = vec3.fromValues(-90,-62 ,-65);
     this.patch.display(treePos, this.camera.position);

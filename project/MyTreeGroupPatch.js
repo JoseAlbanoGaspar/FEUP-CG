@@ -35,7 +35,7 @@ export class MyTreeGroupPatch extends CGFobject {
 
     getRandomNumber(a, b) {
         return Math.floor(Math.random() * (b - a + 1) + a);
-      }
+    }
 
     enableNormalViz(){
         this.quad.enableNormalViz();

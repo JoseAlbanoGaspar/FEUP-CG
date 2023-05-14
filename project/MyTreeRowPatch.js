@@ -29,14 +29,11 @@ export class MyTreeRowPatch extends CGFobject {
             this.randomX.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
             this.randomZ.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
         }
-
-        
-        
 	}
 
     getRandomNumber(a, b) {
         return Math.floor(Math.random() * (b - a + 1) + a);
-      }
+    }
 
     enableNormalViz(){
         this.quad.enableNormalViz();
@@ -59,6 +56,6 @@ export class MyTreeRowPatch extends CGFobject {
             posZ += distance;
         }
         this.scene.popMatrix();
-      }
+    }
       
 }
