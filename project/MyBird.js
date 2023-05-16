@@ -19,6 +19,7 @@ export class MyBird extends CGFobject {
         this.wingLeft = new MyWings(scene, true);
         this.wingRight = new MyWings(scene, false);
         this.paw = new MyPaw(scene);
+        this.inicial_posy = pos_y;
 
         this.shader = new CGFshader(scene.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag")
         this.shader.setUniformsValues({ normScale: 1, timeFactor: 0 });
@@ -61,6 +62,9 @@ export class MyBird extends CGFobject {
         this.wingRotation;
         this.initBuffers();
         scene.setUpdatePeriod(50);
+
+        this.gettingDown = false;
+        this.gettingUp = false;
 	}
 
     enableNormalViz(){
@@ -108,7 +112,11 @@ export class MyBird extends CGFobject {
     }
 
     down(){
-        this.pos_y -= 1;
+        this.pos_y -= (62 - (-this.inicial_posy))/60;
+    }
+
+    up(){
+        this.pos_y += (62 - (-this.inicial_posy))/60;
     }
 
     reset() {

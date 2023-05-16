@@ -53,7 +53,6 @@ export class MyScene extends CGFscene {
       this.allEggs.push(new MyBirdEggs(this, 1.4, 1.2));
     }
   
-  
     this.billboardShader = new CGFshader(this.gl, "shaders/bilboardtree.vert", "shaders/bilboardtree.frag");
     this.patch = new MyTreeGroupPatch(this, this.billboardShader);
     this.row = new MyTreeRowPatch(this, this.billboardShader); 
@@ -140,11 +139,31 @@ export class MyScene extends CGFscene {
       keyPressed = true;
       this.bird.reset("R");
     }
+    
+    if (!this.bird.gettingDown && !this.bird.gettingUp) {
+      if (this.gui.isKeyPressed("KeyP")){
+        text += "P";
+        keyPressed = true;
+        this.bird.gettingDown = true;
+        this.bird.down();
+      }
+    } else {
+      if (this.bird.gettingDown) {
+        if (this.bird.pos_y > -62) {
+          this.bird.down();
+        } else {
+          this.bird.gettingDown = false;
+          this.bird.gettingUp = true;
+        } 
+      }
 
-    if (this.gui.isKeyPressed("KeyP")){
-      text += "P";
-      keyPressed = true;
-      this.bird.down();
+      if (this.bird.gettingUp) {
+        if (this.bird.pos_y < 0) {
+          this.bird.up();
+        } else {
+          this.bird.gettingUp = false;
+        } 
+      }
     }
 
     if (keyPressed){
@@ -189,13 +208,11 @@ export class MyScene extends CGFscene {
     
     for(let i = 0; i < this.allEggs.length; i++){
       this.pushMatrix();
-      this.translate(10*i + 10, 0, 0);
+      this.translate(-90 + i*5, -62, 65);
       this.allEggs[i].display();
       this.popMatrix();
     }
   
-    
-    
     this.setActiveShader(this.billboardShader);
     let treePos = vec3.fromValues(-90,-62 ,-65);
     this.patch.display(treePos, this.camera.position);
