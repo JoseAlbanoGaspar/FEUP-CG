@@ -57,7 +57,7 @@ export class MyBird extends CGFobject {
         this.pos_x = pos_x;
         this.pos_y = pos_y;
         this.pos_z = pos_z;
-        this.velocity = velocity;
+        this.velocity = 0;
         this.time = 0;
         this.wingRotation;
         this.initBuffers();
@@ -83,7 +83,7 @@ export class MyBird extends CGFobject {
         //maybe the 1000/10 change with the velocity
         let velInc = this.velocity == 0 ? 1 :  (this.velocity / 0.2 + 1) * 0.5;
         this.wingRotation = Math.sin((2 * Math.PI) / (10 * velInc) * (t * velInc / 100 % 10) * velInc) * (Math.PI / 6) ;  // roda entre [ - Math.PI / 6, Math.PI / 6]
-        // 1.2 *  (numero de incrementos da velocidade)
+        
 
         this.pos_x += this.velocity * Math.sin(this.ang + Math.PI/2) * 1.2;
         this.pos_z += this.velocity * Math.cos(this.ang + Math.PI/2) * 1.2;
@@ -128,7 +128,7 @@ export class MyBird extends CGFobject {
     }
 
     display(){
-        this.scene.translate(this.pos_x, this.pos_y+this.heigth, this.pos_z);
+        this.scene.translate(this.pos_x, this.pos_y + this.heigth  , this.pos_z);
         this.scene.rotate(this.ang, 0, 1, 0);
         this.colors["BODY"].apply();
         this.scene.pushMatrix();
@@ -163,20 +163,21 @@ export class MyBird extends CGFobject {
         this.scene.popMatrix();
         
         this.scene.pushMatrix();
-        this.scene.rotate(this.wingRotation, 1, 0, 0);
-        this.scene.translate(-4.5,-2,-3);
+        this.scene.translate(-4.5,-2,-1);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
-        this.scene.scale(1.5, 1.5, 1.5);
+        this.scene.scale(2.1, 1.9, 1.5);
+        this.scene.rotate(this.wingRotation, 0, 0, 1);
+        this.scene.translate(1 ,0, 0);
         this.wingLeft.display();
         this.scene.popMatrix();
 
-        //TER UM PIVOT À VOLTA DO QUAL AS ASAS RODAM
         this.scene.pushMatrix();
-        this.scene.rotate(-this.wingRotation, 1, 0, 0);
-        this.scene.translate(-4.5,-2,3);
+        this.scene.translate(-4.5,-2,1);
         this.scene.rotate(Math.PI, 1,0, 0);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
-        this.scene.scale(1.5, 1.5, 1.5);
+        this.scene.scale(2.1, 1.9, 1.5);
+        this.scene.rotate(-this.wingRotation, 0, 0, 1);
+        this.scene.translate(1 ,0, 0);
         this.wingRight.display();
         this.scene.popMatrix();
         this.scene.pushMatrix();

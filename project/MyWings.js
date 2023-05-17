@@ -31,7 +31,7 @@ export class MyWings extends CGFobject {
     display(){
         this.color.apply();
         this.scene.pushMatrix();
-        this.scene.scale(1.3,1,1);
+        this.scene.scale(1.24,1,1);
         this.scene.rotate(Math.PI, 0,1,0);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
         this.scene.rotate(Math.PI/4, 0, 0, 1);
@@ -41,8 +41,15 @@ export class MyWings extends CGFobject {
         
         this.scene.pushMatrix();
         this.scene.translate(1, 0, 0);
+        if (this.flag) {
+            this.scene.translate(0.04,0.06,0)
+            this.scene.rotate(-Math.PI / 10, 0, 0, 1);
+        }
+        else {
+            this.scene.translate(-0.04,-0.06,0)
+            this.scene.rotate(Math.PI / 10, 0, 0, 1);
+        }
 
-        this.flag ? this.scene.rotate(-Math.PI / 10, 0, 0, 1): this.scene.rotate(Math.PI / 10, 0, 0, 1);
         this.scene.rotate(3 * Math.PI / 2, 1, 0, 0);
         this.scene.translate(1.2, 0, 0);
         this.triangle.display();
