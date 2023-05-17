@@ -6,6 +6,7 @@ import { MyNest } from "./MyNest.js";
 import { MyBirdEggs } from "./MyBirdEggs.js";
 import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
 import { MyTreeRowPatch } from "./MyTreeRowPatch.js"; 
+
 /**
  * MyScene
  * @constructor
@@ -138,6 +139,7 @@ export class MyScene extends CGFscene {
     if (this.gui.isKeyPressed("KeyR")){
       text += " R ";
       keyPressed = true;
+      this.bird.gettingDown = false;
       this.bird.reset("R");
     }
     

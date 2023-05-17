@@ -58,7 +58,7 @@ export class MyBird extends CGFobject {
         this.pos_y = pos_y;
         this.pos_z = pos_z;
         this.velocity = velocity;
-        this.time = 0;
+        //this.time = 0;
         this.wingRotation;
         this.initBuffers();
         scene.setUpdatePeriod(50);
@@ -90,7 +90,7 @@ export class MyBird extends CGFobject {
 
         this.pos_x += this.velocity * Math.sin(this.ang + Math.PI/2) * 1.2;
         this.pos_z += this.velocity * Math.cos(this.ang + Math.PI/2) * 1.2;
-        this.time = t;
+        //this.time = t;
         
         if (this.catchedEgg != null) {
             if (!this.droppingEgg) { // egg with the bird
@@ -105,12 +105,10 @@ export class MyBird extends CGFobject {
 
     checkEgg() {
         for(i=0; i<this.allEggs.length; i++){
-            if(this.pos_x >= (this.allEggs[i].x - 0.8) && this.pos_x <= (this.allEggs[i].x + 0.8) && this.pos_z >= (this.allEggs[i].z - 0.8) && this.pos_z <= (this.allEggs[i].z + 0.8)) {
+            if(this.pos_x >= (this.allEggs[i].x - 0.5) && this.pos_x <= (this.allEggs[i].x + 0.5) && this.pos_z >= (this.allEggs[i].z - 0.5) && this.pos_z <= (this.allEggs[i].z + 0.5)) {
                 this.allEggs[i];
             }
         }
-
-        return null;
     }
     
     turn(key){
@@ -134,11 +132,11 @@ export class MyBird extends CGFobject {
     }
 
     down(){
-        this.pos_y -= (62 - (-this.inicial_posy))/60;
+        this.pos_y -= (62 - (-this.inicial_posy))/30;
     }
 
     up(){
-        this.pos_y += (62 - (-this.inicial_posy))/60;
+        this.pos_y += (62 - (-this.inicial_posy))/30;
     }
 
     reset() {
@@ -192,7 +190,6 @@ export class MyBird extends CGFobject {
         this.wingLeft.display();
         this.scene.popMatrix();
 
-        //TER UM PIVOT À VOLTA DO QUAL AS ASAS RODAM
         this.scene.pushMatrix();
         this.scene.rotate(-this.wingRotation, 1, 0, 0);
         this.scene.translate(-4.5,-2,3);

@@ -2,7 +2,7 @@ import { CGFobject, CGFtexture, CGFshader } from '../lib/CGF.js';
 import { MyBillboard } from "./MyBillboard.js";
 
 /**
- * MyPanorama
+ * MyTreeGroupPatch
  * @constructor
  * @param scene - Reference to MyScene object
  */

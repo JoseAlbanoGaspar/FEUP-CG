@@ -2,7 +2,7 @@ import {CGFobject,  CGFappearance, CGFtexture} from '../lib/CGF.js';
 import { MySemiSphere } from './MySemiSphere.js';
 
 /**
- * MyBird
+ * MyNest
  * @constructor
  * @param scene - Reference to MyScene object
  */
