@@ -11,7 +11,7 @@ import { MyPaw } from './MyPaw.js';
  */
 export class MyBird extends CGFobject {
 
-	constructor(scene, ang, velocity, pos_x, pos_y, pos_z) {
+	constructor(scene, ang, velocity, pos_x, pos_y, pos_z, allEggs) {
 		super(scene);
         this.body = new MySphere(scene, 3, 30, 30);
         this.eye = new MySphere(scene, 0.5, 15, 15);
@@ -65,6 +65,10 @@ export class MyBird extends CGFobject {
 
         this.gettingDown = false;
         this.gettingUp = false;
+        this.droppingEgg = false;
+
+        this.allEggs = allEggs;
+        this.catchedEgg = null;
 	}
 
     enableNormalViz(){
@@ -78,7 +82,6 @@ export class MyBird extends CGFobject {
     }
 
     update(t){
-
         this.heigth = Math.sin(2 * Math.PI / 10 * (t / 100 % 10 + 5) );
         //maybe the 1000/10 change with the velocity
         let velInc = this.velocity == 0 ? 1 :  (this.velocity / 0.2 + 1) * 0.5;
@@ -88,7 +91,26 @@ export class MyBird extends CGFobject {
         this.pos_x += this.velocity * Math.sin(this.ang + Math.PI/2) * 1.2;
         this.pos_z += this.velocity * Math.cos(this.ang + Math.PI/2) * 1.2;
         this.time = t;
-    
+        
+        if (this.catchedEgg != null) {
+            if (!this.droppingEgg) { // egg with the bird
+                this.catchedEgg.x = this.pos_x;
+                this.catchedEgg.y = this.pos_y;
+                this.catchedEgg.z = this.pos_z;
+            } else {
+                this.droppingEgg = true; // drop the egg
+            }
+        }
+    }
+
+    checkEgg() {
+        for(i=0; i<this.allEggs.length; i++){
+            if(this.pos_x >= (this.allEggs[i].x - 0.8) && this.pos_x <= (this.allEggs[i].x + 0.8) && this.pos_z >= (this.allEggs[i].z - 0.8) && this.pos_z <= (this.allEggs[i].z + 0.8)) {
+                this.allEggs[i];
+            }
+        }
+
+        return null;
     }
     
     turn(key){

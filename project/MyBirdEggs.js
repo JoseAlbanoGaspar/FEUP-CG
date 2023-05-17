@@ -10,7 +10,7 @@ import { MySemiSphere } from './MySemiSphere.js';
 export class MyBirdEggs extends CGFobject {
     
 
-	constructor(scene, scaleYYPlus, scaleYYMinor) {
+	constructor(scene, scaleYYPlus, scaleYYMinor, x, y, z) {
 		super(scene);
 
         this.egg = new MySphere(scene, 2, 30, 20, false, scaleYYPlus, scaleYYMinor );
@@ -22,7 +22,9 @@ export class MyBirdEggs extends CGFobject {
         this.eggAppearence.setDiffuse(color[0], color[1], color[2], 1.0);
         this.eggAppearence.setShininess(10.0);
         this.eggAppearence.setTexture(new CGFtexture(scene, 'images/eggstexture.jpg'));
-    
+        this.x = x;
+        this.y = y;
+        this.z = z;
         
         this.initBuffers();
 	}
