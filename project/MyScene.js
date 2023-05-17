@@ -35,7 +35,7 @@ export class MyScene extends CGFscene {
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.selectedShader = 0;
-    this.speedFactor = 1;
+    this.speedFactor = 0;
     this.otherScaleFactor = 1;
 
     //loading textures
@@ -54,7 +54,7 @@ export class MyScene extends CGFscene {
       this.allEggs.push(new MyBirdEggs(this, 1.4, 1.2, -90 + i*5, -62, 65));
     }
   
-    this.bird = new MyBird(this, 1, this.speedFactor, 3, 3, 3, this.allEggs);
+    this.bird = new MyBird(this, 1, this.speedFactor, 0, 0, 0, this.allEggs);
     this.billboardShader = new CGFshader(this.gl, "shaders/bilboardtree.vert", "shaders/bilboardtree.frag");
     this.patch = new MyTreeGroupPatch(this, this.billboardShader);
     this.row = new MyTreeRowPatch(this, this.billboardShader); 

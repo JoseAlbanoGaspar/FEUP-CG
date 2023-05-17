@@ -58,7 +58,6 @@ export class MyBird extends CGFobject {
         this.pos_y = pos_y;
         this.pos_z = pos_z;
         this.velocity = velocity;
-        //this.time = 0;
         this.wingRotation;
         this.initBuffers();
         scene.setUpdatePeriod(50);
@@ -90,7 +89,6 @@ export class MyBird extends CGFobject {
 
         this.pos_x += this.velocity * Math.sin(this.ang + Math.PI/2) * 1.2;
         this.pos_z += this.velocity * Math.cos(this.ang + Math.PI/2) * 1.2;
-        //this.time = t;
         
         if (this.catchedEgg != null) {
             if (!this.droppingEgg) { // egg with the bird
@@ -104,11 +102,20 @@ export class MyBird extends CGFobject {
     }
 
     checkEgg() {
-        for(i=0; i<this.allEggs.length; i++){
+        
+        for(let i=0; i<this.allEggs.length; i++){
+            console.log("posx: " + this.pos_x);
+            console.log("eggx: " + this.allEggs[i].x);
+            console.log("posz: " + this.pos_z);
+            console.log("eggz: " + this.allEggs[i].z);
             if(this.pos_x >= (this.allEggs[i].x - 0.5) && this.pos_x <= (this.allEggs[i].x + 0.5) && this.pos_z >= (this.allEggs[i].z - 0.5) && this.pos_z <= (this.allEggs[i].z + 0.5)) {
+                console.log("TOCOU NO OVO");
+                console.log("posx bird " + this.pos_x);
+                console.log("posx bird " +  this.allEggs[i].x);
                 this.allEggs[i];
             }
         }
+        return null;
     }
     
     turn(key){
@@ -133,6 +140,7 @@ export class MyBird extends CGFobject {
 
     down(){
         this.pos_y -= (62 - (-this.inicial_posy))/30;
+        this.checkEgg();
     }
 
     up(){

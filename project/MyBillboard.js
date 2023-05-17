@@ -2,7 +2,7 @@ import {CGFobject, CGFappearance } from '../lib/CGF.js';
 import { MyPlane } from "./MyPlane.js";
 
 /**
- * MyPanorama
+ * MyBillboard
  * @constructor
  * @param scene - Reference to MyScene object
  */
