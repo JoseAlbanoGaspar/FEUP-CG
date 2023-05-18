@@ -108,11 +108,11 @@ export class MyBird extends CGFobject {
             console.log("eggx: " + this.allEggs[i].x);
             console.log("posz: " + this.pos_z);
             console.log("eggz: " + this.allEggs[i].z);
-            if(this.pos_x >= (this.allEggs[i].x - 0.5) && this.pos_x <= (this.allEggs[i].x + 0.5) && this.pos_z >= (this.allEggs[i].z - 0.5) && this.pos_z <= (this.allEggs[i].z + 0.5)) {
-                console.log("TOCOU NO OVO");
+            //inverter os sinal da pos_x e pos_z
+            if(Math.abs(this.pos_x) >= (this.allEggs[i].x - 0.5) && Math.abs(this.pos_x) <= (this.allEggs[i].x + 0.5) && Math.abs(this.pos_z) >= (this.allEggs[i].z - 0.5) && Math.abs(this.pos_z) <= (this.allEggs[i].z + 0.5)) {
                 console.log("posx bird " + this.pos_x);
                 console.log("posx bird " +  this.allEggs[i].x);
-                this.allEggs[i];
+                return this.allEggs[i];
             }
         }
         return null;

@@ -51,7 +51,7 @@ export class MyScene extends CGFscene {
 
     this.allEggs = [];
     for(let i = 1; i < 6; i++){
-      this.allEggs.push(new MyBirdEggs(this, 1.4, 1.2, -90 + i*5, -62, 65));
+      this.allEggs.push(new MyBirdEggs(this, 1.4, 1.2, -60 + i*4, -62, 65));
     }
   
     this.bird = new MyBird(this, 1, this.speedFactor, 0, 0, 0, this.allEggs);
@@ -171,6 +171,12 @@ export class MyScene extends CGFscene {
       }
     }
 
+    if(this.gui.isKeyPressed("KeyO")){
+      text += " O ";
+      keyPressed = true;
+      this.bird.turn("O");
+    }
+
     if (keyPressed){
       console.log(text);
     }
@@ -203,7 +209,6 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
     this.scale(this.otherScaleFactor,this.otherScaleFactor,this.otherScaleFactor);
-    //fazer o speed factor
     this.rotate(Math.PI/4 + Math.PI/2, 0, 1, 0);
     this.bird.display();
     this.popMatrix();
