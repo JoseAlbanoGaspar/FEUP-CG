@@ -16,9 +16,9 @@ export class MyNest extends CGFobject {
         this.inNest = new MySemiSphere(scene, 3, 30, 20, true);
 
         this.material = new CGFappearance(this.scene);
-        this.material.setAmbient(1,1,1,0);
-        this.material.setDiffuse(0.5,0.5,0.5,1);
-        this.material.setEmission(0.8,0.8,0.8,0.7);
+        this.material.setAmbient(1,1,1,1);
+        this.material.setDiffuse(1,1,1,1);
+        this.material.setEmission(0.3,0.3,0.3,0.7);
         this.material.setTexture(new CGFtexture(scene, 'images/nest.png'));
 
         this.initBuffers();
