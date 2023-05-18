@@ -87,8 +87,10 @@ export class MyBird extends CGFobject {
         this.wingRotation = Math.sin((2 * Math.PI) / (10 * velInc) * (t * velInc / 100 % 10) * velInc) * (Math.PI / 6) ;  // roda entre [ - Math.PI / 6, Math.PI / 6]
         
 
-        this.pos_x += this.velocity * Math.sin(this.ang + Math.PI/2) * 1.2;
-        this.pos_z += this.velocity * Math.cos(this.ang + Math.PI/2) * 1.2;
+        this.pos_x += this.velocity * Math.sin(this.ang) * 1.2;
+        this.pos_z += this.velocity * Math.cos(this.ang) * 1.2;
+        console.log(this.pos_x);
+        console.log(this.pos_z);
         
         if (this.catchedEgg != null) {
             if (!this.droppingEgg) { // egg with the bird
@@ -110,8 +112,6 @@ export class MyBird extends CGFobject {
             console.log("eggz: " + this.allEggs[i].z);
             //inverter os sinal da pos_x e pos_z
             if(Math.abs(this.pos_x) >= (this.allEggs[i].x - 0.5) && Math.abs(this.pos_x) <= (this.allEggs[i].x + 0.5) && Math.abs(this.pos_z) >= (this.allEggs[i].z - 0.5) && Math.abs(this.pos_z) <= (this.allEggs[i].z + 0.5)) {
-                console.log("posx bird " + this.pos_x);
-                console.log("posx bird " +  this.allEggs[i].x);
                 return this.allEggs[i];
             }
         }
@@ -139,12 +139,12 @@ export class MyBird extends CGFobject {
     }
 
     down(){
-        this.pos_y -= (62 - (-this.inicial_posy))/30;
+        this.pos_y -= (58 - (-this.inicial_posy))/30;
         this.checkEgg();
     }
 
     up(){
-        this.pos_y += (62 - (-this.inicial_posy))/30;
+        this.pos_y += (58 - (-this.inicial_posy))/30;
     }
 
     reset() {
@@ -152,17 +152,16 @@ export class MyBird extends CGFobject {
         this.pos_y = 0;
         this.pos_z = 0;
         this.velocity = 0;
-        this.ang = 1;
+        this.ang = 0;
     }
 
     display(){
-        this.scene.translate(this.pos_x, this.pos_y + this.heigth  , this.pos_z);
-        this.scene.rotate(this.ang, 0, 1, 0);
-        this.colors["BODY"].apply();
         this.scene.pushMatrix();
+        this.scene.translate(this.pos_x, this.pos_y + this.heigth, this.pos_z);
+        this.scene.rotate(this.ang - Math.PI/2, 0, 1, 0);
+        this.colors["BODY"].apply();
         this.body.display();
-        this.scene.popMatrix();
-
+  
         this.scene.pushMatrix();
         this.scene.translate(-4.5, -3, 0);
         this.scene.rotate(Math.PI /1.7, 0, 0, 1);
@@ -214,6 +213,8 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI, 1,0, 0);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.paw.display();
+        this.scene.popMatrix();
+
         this.scene.popMatrix();
     }
 }

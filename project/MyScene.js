@@ -51,10 +51,10 @@ export class MyScene extends CGFscene {
 
     this.allEggs = [];
     for(let i = 1; i < 6; i++){
-      this.allEggs.push(new MyBirdEggs(this, 1.4, 1.2, -60 + i*4, -62, 65));
+      this.allEggs.push(new MyBirdEggs(this, 1.4, 1.2, -60 + i*4, -58, 65));
     }
   
-    this.bird = new MyBird(this, 1, this.speedFactor, 0, 0, 0, this.allEggs);
+    this.bird = new MyBird(this, 0, this.speedFactor, 0, 0, 0, this.allEggs);
     this.billboardShader = new CGFshader(this.gl, "shaders/bilboardtree.vert", "shaders/bilboardtree.frag");
     this.patch = new MyTreeGroupPatch(this, this.billboardShader);
     this.row = new MyTreeRowPatch(this, this.billboardShader); 
@@ -152,7 +152,7 @@ export class MyScene extends CGFscene {
       }
     } else {
       if (this.bird.gettingDown) {
-        if (this.bird.pos_y > -62) {
+        if (this.bird.pos_y > -58) {
           this.bird.down();
         } else { // touch the floor (verify for egg)
           this.bird.gettingDown = false;
@@ -209,7 +209,8 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
     this.scale(this.otherScaleFactor,this.otherScaleFactor,this.otherScaleFactor);
-    this.rotate(Math.PI/4 + Math.PI/2, 0, 1, 0);
+    //this.translate(this.bird.pos_x, this.bird.pos_y + this.bird.heigth, this.bird.pos_z);
+    //this.rotate(this.bird.ang, 0, 1, 0);
     this.bird.display();
     this.popMatrix();
     this.pushMatrix();
