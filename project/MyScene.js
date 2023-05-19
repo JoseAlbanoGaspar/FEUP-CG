@@ -177,6 +177,9 @@ export class MyScene extends CGFscene {
         text += " O ";
         keyPressed = true;
         this.bird.droppingEgg = true;
+
+        this.bird.eggVelocity = this.bird.velocity;
+        this.bird.eggAng = this.bird.ang;
   
       }
 

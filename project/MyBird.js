@@ -19,7 +19,11 @@ export class MyBird extends CGFobject {
         this.wingLeft = new MyWings(scene, true);
         this.wingRight = new MyWings(scene, false);
         this.paw = new MyPaw(scene);
+        
+        // egg movement
         this.inicial_posy = pos_y;
+        this.eggVelocity = 0;
+        this.eggAng = 0;
 
         this.shader = new CGFshader(scene.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag")
         this.shader.setUniformsValues({ normScale: 1, timeFactor: 0 });
@@ -117,6 +121,8 @@ export class MyBird extends CGFobject {
     dropEgg(){
         if(this.catchedEgg.y > -58){
             this.catchedEgg.y -= (58 - (-this.inicial_posy))/30;
+            this.catchedEgg.z += this.eggVelocity * Math.cos(this.eggAng) * 1.2;
+            this.catchedEgg.x += this.eggVelocity * Math.sin(this.eggAng) * 1.2;
             this.catchedEgg.display();
         }
 
