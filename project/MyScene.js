@@ -171,11 +171,21 @@ export class MyScene extends CGFscene {
       }
     }
 
-    if(this.gui.isKeyPressed("KeyO")){
-      text += " O ";
-      keyPressed = true;
-      this.bird.turn("O");
+    if(this.bird.catchedEgg != null){
+
+      if(this.gui.isKeyPressed("KeyO")){
+        text += " O ";
+        keyPressed = true;
+        this.bird.droppingEgg = true;
+  
+      }
+
     }
+
+    if(this.bird.droppingEgg){
+      this.bird.dropEgg();
+    }
+    
 
     if (keyPressed){
       console.log(text);
@@ -209,8 +219,6 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
     this.scale(this.otherScaleFactor,this.otherScaleFactor,this.otherScaleFactor);
-    //this.translate(this.bird.pos_x, this.bird.pos_y + this.bird.heigth, this.bird.pos_z);
-    //this.rotate(this.bird.ang, 0, 1, 0);
     this.bird.display();
     this.popMatrix();
     this.pushMatrix();
