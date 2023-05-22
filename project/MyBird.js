@@ -90,7 +90,6 @@ export class MyBird extends CGFobject {
         let velInc = this.velocity == 0 ? 1 :  (this.velocity / 0.2 + 1) * 0.5;
         this.wingRotation = Math.sin((2 * Math.PI) / (10 * velInc) * (t * velInc / 100 % 10) * velInc) * (Math.PI / 6) ;  // roda entre [ - Math.PI / 6, Math.PI / 6]
         
-
         this.pos_x += this.velocity * Math.sin(this.ang) * 1.2;
         this.pos_z += this.velocity * Math.cos(this.ang) * 1.2;
        
@@ -99,10 +98,7 @@ export class MyBird extends CGFobject {
                 this.catchedEgg.x = this.pos_x+0.9;
                 this.catchedEgg.y = (this.pos_y-8)+this.heigth;
                 this.catchedEgg.z = this.pos_z-3.6;
-            } else {
-                //this.droppingEgg = true; // drop the egg
-                
-            }
+            } 
         }
     }
 
@@ -110,8 +106,6 @@ export class MyBird extends CGFobject {
         
         for(let i=0; i<this.allEggs.length; i++){
             if(this.pos_x >= (this.allEggs[i].x - 5) && this.pos_x <= (this.allEggs[i].x + 5) && this.pos_z >= (this.allEggs[i].z - 5) && this.pos_z <= (this.allEggs[i].z + 5)) {
-                console.log("TOCOU NO OVO");
-                console.log(this.catchedEgg);
                 return this.allEggs[i];
             }
         }

@@ -11,7 +11,7 @@ export class MyNest extends CGFobject {
 
 	constructor(scene) {
 		super(scene);
-        
+        this.eggsInNest = [];
         this.outNest = new MySemiSphere(scene, 3, 30, 20);
         this.inNest = new MySemiSphere(scene, 3, 30, 20, true);
 
@@ -23,6 +23,16 @@ export class MyNest extends CGFobject {
 
         this.initBuffers();
 	}
+
+    checkEgg() {
+        
+        for(let i=0; i<this.scene.allEggs.length; i++){
+            if(this.allEgg[i].x <-55 && this.allEgg[i].x < -35 && tthis.allEgg[i].z < -35 && this.allEgg[i].z > -55 && this.allEgg[i].y==50) {
+                this.eggsInNest.push(this.allEgg[i]);
+            }
+        }
+        return null;
+    }
 
     enableNormalViz(){
         this.head.enableNormalViz();

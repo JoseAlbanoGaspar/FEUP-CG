@@ -154,7 +154,7 @@ export class MyScene extends CGFscene {
       if (this.bird.gettingDown) {
         if (this.bird.pos_y > -58) {
           this.bird.down();
-        } else { // touch the floor (verify for egg)
+        } else {
           this.bird.gettingDown = false;
           this.bird.gettingUp = true;
 
@@ -173,7 +173,7 @@ export class MyScene extends CGFscene {
 
     if(this.bird.catchedEgg != null){
 
-      if(this.gui.isKeyPressed("KeyO")){
+      if(this.gui.isKeyPressed("KeyO") && this.bird.pos_x > -55 && this.bird.pos_x < -35 && this.bird.pos_z < -35 && this.bird.pos_z > -55){
         text += " O ";
         keyPressed = true;
         this.bird.droppingEgg = true;
@@ -187,6 +187,7 @@ export class MyScene extends CGFscene {
 
     if(this.bird.droppingEgg){
       this.bird.dropEgg();
+      //this.nest.checkEggInNest();
     }
     
 
