@@ -19,7 +19,7 @@ export class MyBillboard extends CGFobject {
         this.materialPlane = new CGFappearance(scene);
         this.materialPlane.setTexture(this.texture);
         this.treeHeight = heigth;
-        this.treeWidth = 10;
+        this.treeWidth = 20;
         this.initBuffers();
 	}
 
@@ -34,7 +34,6 @@ export class MyBillboard extends CGFobject {
     display(quadPos, cameraPos) {
         this.scene.pushMatrix();
         this.materialPlane.apply();
-        //this.texture2.bind(1);
 
         let aux = vec3.create();
         vec3.subtract(aux, cameraPos, quadPos);
@@ -51,8 +50,6 @@ export class MyBillboard extends CGFobject {
         this.scene.scale(this.treeWidth, this.treeHeight, this.treeWidth);  // y gets tree height
         this.scene.translate(0,0.5,0);  //base of the tree hits the ground
         this.scene.rotate(alpha, rotationAxis[0], rotationAxis[1],rotationAxis[2]);
-
-        //this.shader.setUniformsValues({x : (quadPos[0] + this.treeWidth / 2 + 200.0) / 400.0, z: (quadPos[2] + this.treeWidth / 2 + 200.0) / 400.0, height : this.treeHeight});
         this.quad.display();
         
         this.scene.popMatrix();

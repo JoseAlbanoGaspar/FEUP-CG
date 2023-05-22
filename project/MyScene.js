@@ -242,7 +242,11 @@ export class MyScene extends CGFscene {
     this.patch.display(treePos, this.camera.position);
     treePos = vec3.fromValues(-100,-62 ,-45);
     this.row.display(treePos, this.camera.position);
-    //treePos = vec3.fromValues(-70,-62 ,-65);
+    treePos = vec3.fromValues(-90,-62 ,-70);
+    this.pushMatrix();
+    this.rotate(Math.PI / 2, 0, 1, 0);
+    this.row.display(treePos, this.camera.position);
+    this.popMatrix();
     this.setActiveShader(this.defaultShader);
     // ---- END Primitive drawing section
   }
