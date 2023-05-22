@@ -37,6 +37,7 @@ export class MyScene extends CGFscene {
     this.selectedShader = 0;
     this.speedFactor = 0;
     this.otherScaleFactor = 1;
+    this.toggleShader = false;
 
     //loading textures
     this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
@@ -136,7 +137,7 @@ export class MyScene extends CGFscene {
       this.bird.turn("D");
     }
 
-    if (this.gui.isKeyPressed("KeyR")){
+    if (this.gui.isKeyPressed("KeyR")) {
       text += " R ";
       keyPressed = true;
       this.bird.gettingDown = false;
@@ -223,7 +224,7 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
     this.scale(this.otherScaleFactor,this.otherScaleFactor,this.otherScaleFactor);
-    this.bird.display();
+    this.bird.display(this.toggleShader);
     this.popMatrix();
     this.pushMatrix();
     this.nest.display();

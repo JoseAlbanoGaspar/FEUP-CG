@@ -101,6 +101,8 @@ export class MyBird extends CGFobject {
                 this.catchedEgg.ang = this.ang - Math.PI/2;
             } 
         }
+
+        this.shader.setUniformsValues({ timeFactor: t / 100 % 100 });
     }
 
     checkEgg() {
@@ -167,8 +169,13 @@ export class MyBird extends CGFobject {
         this.ang = 0;
     }
 
-    display(){
+    display(interfaceCommand){  
+        let enterShader = false;
         this.scene.pushMatrix();
+        if (interfaceCommand) {
+            this.scene.setActiveShader(this.shader);
+            enterShader = true;
+        }
         this.scene.translate(this.pos_x, this.pos_y + this.heigth, this.pos_z);
         this.scene.rotate(this.ang - Math.PI/2, 0, 1, 0);
         this.colors["BODY"].apply();
@@ -227,6 +234,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.paw.display();
         this.scene.popMatrix();
+        if (enterShader || interfaceCommand) this.scene.setActiveShader(this.scene.defaultShader);
 
         this.scene.popMatrix();
     }
