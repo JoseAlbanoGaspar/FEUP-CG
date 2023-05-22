@@ -62,6 +62,7 @@ export class MyBird extends CGFobject {
         this.pos_y = pos_y;
         this.pos_z = pos_z;
         this.velocity = velocity;
+        this.prevSpeedFactor = velocity;
         this.wingRotation;
         this.initBuffers();
         scene.setUpdatePeriod(50);
@@ -169,7 +170,15 @@ export class MyBird extends CGFobject {
         this.ang = 0;
     }
 
-    display(interfaceCommand){  
+    setVelocityByInterface(speed) {
+        if (this.prevSpeedFactor !== speed) {
+            this.velocity = speed;
+            this.prevSpeedFactor = this.velocity;
+        }
+    }
+
+    display(interfaceCommand, speedFactorCommand){  
+        this.setVelocityByInterface(speedFactorCommand)
         let enterShader = false;
         this.scene.pushMatrix();
         if (interfaceCommand) {

@@ -41,11 +41,9 @@ export class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
         this.gui.add(this.scene, "toggleShader").name("Toggle Shader");
 
-        //Slider element in GUI
-        this.gui.add(this.scene, 'scaleFactor', 0.1, 5).name('Scale Factor');
         
         //Slider speed Factor and scale Factor
-        this.gui.add(this.scene, 'speedFactor', 0.1, 3).name('Speed Factor');
+        this.gui.add(this.scene, 'speedFactor', 0, 3, 0.2).name('Speed Factor');
         this.gui.add(this.scene, 'otherScaleFactor', 0.5, 3).name('Scale Factor');
 
         this.initKeys();

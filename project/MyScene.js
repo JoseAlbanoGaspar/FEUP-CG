@@ -224,7 +224,7 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
     this.scale(this.otherScaleFactor,this.otherScaleFactor,this.otherScaleFactor);
-    this.bird.display(this.toggleShader);
+    this.bird.display(this.toggleShader, this.speedFactor);
     this.popMatrix();
     this.pushMatrix();
     this.nest.display();
