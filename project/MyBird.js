@@ -95,9 +95,10 @@ export class MyBird extends CGFobject {
        
         if (this.catchedEgg != null) {
             if (!this.droppingEgg) { // egg with the bird
-                this.catchedEgg.x = this.pos_x+0.9;
-                this.catchedEgg.y = (this.pos_y-8)+this.heigth;
-                this.catchedEgg.z = this.pos_z-3.6;
+                this.catchedEgg.x = this.pos_x-1;
+                this.catchedEgg.y = (this.pos_y-10)+this.heigth;
+                this.catchedEgg.z = this.pos_z+1;
+                this.catchedEgg.ang = this.ang - Math.PI/2;
             } 
         }
     }
@@ -106,6 +107,7 @@ export class MyBird extends CGFobject {
         
         for(let i=0; i<this.allEggs.length; i++){
             if(this.pos_x >= (this.allEggs[i].x - 5) && this.pos_x <= (this.allEggs[i].x + 5) && this.pos_z >= (this.allEggs[i].z - 5) && this.pos_z <= (this.allEggs[i].z + 5)) {
+
                 return this.allEggs[i];
             }
         }
@@ -218,6 +220,7 @@ export class MyBird extends CGFobject {
         this.scene.translate(1 ,0, 0);
         this.wingRight.display();
         this.scene.popMatrix();
+        
         this.scene.pushMatrix();
         this.scene.translate(-4.5,-3,2);
         this.scene.rotate(Math.PI, 1,0, 0);

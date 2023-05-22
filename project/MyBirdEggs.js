@@ -25,6 +25,7 @@ export class MyBirdEggs extends CGFobject {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.ang = 0;
         
         this.initBuffers();
 	}
@@ -41,6 +42,7 @@ export class MyBirdEggs extends CGFobject {
         this.scene.pushMatrix();
         this.eggAppearence.apply();
         this.scene.translate(this.x, this.y, this.z);
+        this.scene.rotate(this.ang, 0, 1, 0);
         this.egg.display();
         this.scene.popMatrix();
         
