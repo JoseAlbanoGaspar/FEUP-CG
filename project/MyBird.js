@@ -97,7 +97,7 @@ export class MyBird extends CGFobject {
         if (this.catchedEgg != null) {
             if (!this.droppingEgg) { // egg with the bird
                 this.catchedEgg.x = this.pos_x+0.9;
-                this.catchedEgg.y = this.pos_y-8;
+                this.catchedEgg.y = (this.pos_y-8)+this.heigth;
                 this.catchedEgg.z = this.pos_z-3.6;
             } else {
                 //this.droppingEgg = true; // drop the egg
@@ -119,8 +119,8 @@ export class MyBird extends CGFobject {
     }
 
     dropEgg(){
-        if(this.catchedEgg.y > -58){
-            this.catchedEgg.y -= (58 - (-this.inicial_posy))/30;
+        if(this.catchedEgg.y > -52){
+            this.catchedEgg.y -= (52 - (-this.inicial_posy))/30;
             this.catchedEgg.z += this.eggVelocity * Math.cos(this.eggAng) * 1.2;
             this.catchedEgg.x += this.eggVelocity * Math.sin(this.eggAng) * 1.2;
             this.catchedEgg.display();
