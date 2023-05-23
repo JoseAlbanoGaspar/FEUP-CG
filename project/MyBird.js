@@ -110,6 +110,7 @@ export class MyBird extends CGFobject {
         
         for(let i=0; i<this.allEggs.length; i++){
             if(this.pos_x >= (this.allEggs[i].x - 5) && this.pos_x <= (this.allEggs[i].x + 5) && this.pos_z >= (this.allEggs[i].z - 5) && this.pos_z <= (this.allEggs[i].z + 5)) {
+                this.allEggs[i].isPicked = true;
                 return this.allEggs[i];
             }
         }
@@ -126,6 +127,7 @@ export class MyBird extends CGFobject {
 
         else {
             this.droppingEgg = false;
+            this.catchedEgg = false;
             this.catchedEgg = null;
         }
             
