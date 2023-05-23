@@ -62,6 +62,7 @@ export class MyBird extends CGFobject {
         this.pos_y = pos_y;
         this.pos_z = pos_z;
         this.velocity = velocity;
+        this.prevSpeedFactor = velocity;
         this.wingRotation;
         this.initBuffers();
         scene.setUpdatePeriod(50);
@@ -101,6 +102,8 @@ export class MyBird extends CGFobject {
                 this.catchedEgg.ang = this.ang - Math.PI/2;
             } 
         }
+
+        this.shader.setUniformsValues({ timeFactor: t / 100 % 100 });
     }
 
     checkEgg() {
@@ -150,6 +153,7 @@ export class MyBird extends CGFobject {
     }
 
     down(){
+        this.gettingDown = true;
         this.pos_y -= (58 - (-this.inicial_posy))/30;
         this.checkEgg();
     }
@@ -159,15 +163,81 @@ export class MyBird extends CGFobject {
     }
 
     reset() {
+        this.gettingDown = false;
         this.pos_x = 0;
         this.pos_y = 0;
         this.pos_z = 0;
         this.velocity = 0;
         this.ang = 0;
     }
+    
+    isGoingUp() {
+        return this.gettingUp;
+    }
 
-    display(){
+    isGoingDown() {
+        return this.gettingDown;
+    }
+
+    upDownMovement() {
+        if (this.gettingDown) {
+            if (this.pos_y > -58) {
+              this.down();
+            } else {
+              this.gettingDown = false;
+              this.gettingUp = true;
+    
+              this.catchedEgg = this.checkEgg()
+            } 
+          }
+    
+          if (this.gettingUp) {
+            if (this.pos_y < 0) {
+              this.up();
+            } else {
+              this.gettingUp = false;
+            } 
+          }
+    }
+
+    initEggDrop() {
+        this.droppingEgg = true;
+
+        this.eggVelocity = this.velocity;
+        this.eggAng = this.ang;
+    }
+
+    isEggDropping() {
+        return this.droppingEgg;
+    }
+
+    hasCatchedEgg() {
+        return this.catchedEgg != null;
+    }
+
+    getPosZ() {
+        return this.pos_z;
+    }
+
+    getPosX() {
+        return this.pos_x;
+    }
+
+    setVelocityByInterface(speed) {
+        if (this.prevSpeedFactor !== speed) {
+            this.velocity = speed;
+            this.prevSpeedFactor = this.velocity;
+        }
+    }
+
+    display(interfaceCommand, speedFactorCommand){  
+        this.setVelocityByInterface(speedFactorCommand)
+        let enterShader = false;
         this.scene.pushMatrix();
+        if (interfaceCommand) {
+            this.scene.setActiveShader(this.shader);
+            enterShader = true;
+        }
         this.scene.translate(this.pos_x, this.pos_y + this.heigth, this.pos_z);
         this.scene.rotate(this.ang - Math.PI/2, 0, 1, 0);
         this.colors["BODY"].apply();
@@ -226,6 +296,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.paw.display();
         this.scene.popMatrix();
+        if (enterShader || interfaceCommand) this.scene.setActiveShader(this.scene.defaultShader);
 
         this.scene.popMatrix();
     }

@@ -37,6 +37,7 @@ export class MyScene extends CGFscene {
     this.selectedShader = 0;
     this.speedFactor = 0;
     this.otherScaleFactor = 1;
+    this.toggleShader = false;
 
     //loading textures
     this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
@@ -136,50 +137,28 @@ export class MyScene extends CGFscene {
       this.bird.turn("D");
     }
 
-    if (this.gui.isKeyPressed("KeyR")){
+    if (this.gui.isKeyPressed("KeyR")) {
       text += " R ";
       keyPressed = true;
-      this.bird.gettingDown = false;
       this.bird.reset("R");
     }
     
-    if (!this.bird.gettingDown && !this.bird.gettingUp) {
+    if (!this.bird.isGoingDown() && !this.bird.isGoingUp()) {
       if (this.gui.isKeyPressed("KeyP")){
         text += "P";
         keyPressed = true;
-        this.bird.gettingDown = true;
         this.bird.down();
       }
     } else {
-      if (this.bird.gettingDown) {
-        if (this.bird.pos_y > -58) {
-          this.bird.down();
-        } else {
-          this.bird.gettingDown = false;
-          this.bird.gettingUp = true;
-
-          this.bird.catchedEgg = this.bird.checkEgg()
-        } 
-      }
-
-      if (this.bird.gettingUp) {
-        if (this.bird.pos_y < 0) {
-          this.bird.up();
-        } else {
-          this.bird.gettingUp = false;
-        } 
-      }
+        this.bird.upDownMovement();     
     }
 
-    if(this.bird.catchedEgg != null){
+    if(this.bird.hasCatchedEgg()){
 
-      if(this.gui.isKeyPressed("KeyO") && this.bird.pos_x > -55 && this.bird.pos_x < -35 && this.bird.pos_z < -35 && this.bird.pos_z > -55){
+      if(this.gui.isKeyPressed("KeyO") && this.bird.getPosX() > -55 && this.bird.getPosX() < -35 && this.bird.getPosZ() < -35 && this.bird.getPosZ() > -55){
         text += " O ";
         keyPressed = true;
-        this.bird.droppingEgg = true;
-
-        this.bird.eggVelocity = this.bird.velocity;
-        this.bird.eggAng = this.bird.ang;
+        this.bird.initEggDrop();
   
       }
 
@@ -223,7 +202,7 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
     this.scale(this.otherScaleFactor,this.otherScaleFactor,this.otherScaleFactor);
-    this.bird.display();
+    this.bird.display(this.toggleShader, this.speedFactor);
     this.popMatrix();
     this.pushMatrix();
     this.nest.display();
