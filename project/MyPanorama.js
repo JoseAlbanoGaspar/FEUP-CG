@@ -32,7 +32,7 @@ export class MyPanorama extends CGFobject {
     display(center){
         this.scene.pushMatrix();
         this.panoramaAppearence.apply();
-        //this.scene.translate(center[0],center[1],center[2]);
+        this.scene.translate(center[0],center[1],center[2]);
         this.scene.scale(200,200,200);
         this.invertSphere.display();
         this.scene.popMatrix();
