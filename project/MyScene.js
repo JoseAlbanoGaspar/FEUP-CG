@@ -215,12 +215,11 @@ export class MyScene extends CGFscene {
     }
   
     this.setActiveShader(this.billboardShader);
-    let treePos = vec3.fromValues(-90,-62 ,-65);
+    let treePos = vec3.fromValues(-100,-62 ,-65);
     this.patch.display(treePos, this.camera.position);
-    treePos = vec3.fromValues(-90,-62 ,-30);
+    treePos = vec3.fromValues(-110,-62 ,-25);
     this.patch.display(treePos, this.camera.position);
-    treePos = vec3.fromValues(-100,-62 ,-45);
-    this.row.display(treePos, this.camera.position);
+
     treePos = vec3.fromValues(-90,-62 ,-70);
     this.pushMatrix();
     this.rotate(Math.PI / 2, 0, 1, 0);

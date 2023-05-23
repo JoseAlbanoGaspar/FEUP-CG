@@ -49,7 +49,7 @@ export class MyTreeGroupPatch extends CGFobject {
         this.scene.pushMatrix();
         this.textures[3].bind(1);
 
-        let distance = 10;
+        let distance = 15;
         let posX = initPos[0];
         let posY = initPos[1];
         let posZ = initPos[2];
