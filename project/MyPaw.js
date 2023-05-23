@@ -3,7 +3,7 @@ import { MyTriangle } from './MyTriangle.js';
 import { MyCylinder } from './MyCylinder.js';
 
 /**
- * MyWings
+ * MyPaw
  * @constructor
  * @param scene - Reference to MyScene object
  */

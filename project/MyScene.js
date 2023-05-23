@@ -6,6 +6,7 @@ import { MyNest } from "./MyNest.js";
 import { MyBirdEggs } from "./MyBirdEggs.js";
 import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
 import { MyTreeRowPatch } from "./MyTreeRowPatch.js"; 
+
 /**
  * MyScene
  * @constructor
@@ -34,15 +35,16 @@ export class MyScene extends CGFscene {
     this.displayAxis = true;
     this.scaleFactor = 1;
     this.selectedShader = 0;
-    this.speedFactor = 1;
+    this.speedFactor = 0;
     this.otherScaleFactor = 1;
+    this.toggleShader = false;
 
     //loading textures
     this.panoramaText = new CGFtexture(this, 'images/panorama4.jpg');
     
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.bird = new MyBird(this, 1, this.speedFactor, 3, 3, 3);
+    
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
     this.terrain = new MyTerrain(this, this.texture, this.texture2);
     this.panoramaSphere = new MyPanorama(this, this.panoramaText);
@@ -50,9 +52,10 @@ export class MyScene extends CGFscene {
 
     this.allEggs = [];
     for(let i = 1; i < 6; i++){
-      this.allEggs.push(new MyBirdEggs(this, 1.4, 1.2));
+      this.allEggs.push(new MyBirdEggs(this, 1.4, 1.2, -60 + i*4, -58, 65));
     }
   
+    this.bird = new MyBird(this, 0, this.speedFactor, 0, 0, 0, this.allEggs);
     this.billboardShader = new CGFshader(this.gl, "shaders/bilboardtree.vert", "shaders/bilboardtree.frag");
     this.patch = new MyTreeGroupPatch(this, this.billboardShader);
     this.row = new MyTreeRowPatch(this, this.billboardShader); 
@@ -134,37 +137,38 @@ export class MyScene extends CGFscene {
       this.bird.turn("D");
     }
 
-    if (this.gui.isKeyPressed("KeyR")){
+    if (this.gui.isKeyPressed("KeyR")) {
       text += " R ";
       keyPressed = true;
       this.bird.reset("R");
     }
     
-    if (!this.bird.gettingDown && !this.bird.gettingUp) {
+    if (!this.bird.isGoingDown() && !this.bird.isGoingUp()) {
       if (this.gui.isKeyPressed("KeyP")){
         text += "P";
         keyPressed = true;
-        this.bird.gettingDown = true;
         this.bird.down();
       }
     } else {
-      if (this.bird.gettingDown) {
-        if (this.bird.pos_y > -62) {
-          this.bird.down();
-        } else {
-          this.bird.gettingDown = false;
-          this.bird.gettingUp = true;
-        } 
+        this.bird.upDownMovement();     
+    }
+
+    if(this.bird.hasCatchedEgg()){
+
+      if(this.gui.isKeyPressed("KeyO") && this.bird.getPosX() > -55 && this.bird.getPosX() < -35 && this.bird.getPosZ() < -35 && this.bird.getPosZ() > -55){
+        text += " O ";
+        keyPressed = true;
+        this.bird.initEggDrop();
+  
       }
 
-      if (this.bird.gettingUp) {
-        if (this.bird.pos_y < 0) {
-          this.bird.up();
-        } else {
-          this.bird.gettingUp = false;
-        } 
-      }
     }
+
+    if(this.bird.droppingEgg){
+      this.bird.dropEgg();
+      //this.nest.checkEggInNest();
+    }
+    
 
     if (keyPressed){
       console.log(text);
@@ -198,9 +202,7 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
     this.scale(this.otherScaleFactor,this.otherScaleFactor,this.otherScaleFactor);
-    //fazer o speed factor
-    this.rotate(Math.PI/4 + Math.PI/2, 0, 1, 0);
-    this.bird.display();
+    this.bird.display(this.toggleShader, this.speedFactor);
     this.popMatrix();
     this.pushMatrix();
     this.nest.display();
@@ -208,7 +210,6 @@ export class MyScene extends CGFscene {
     
     for(let i = 0; i < this.allEggs.length; i++){
       this.pushMatrix();
-      this.translate(-90 + i*5, -62, 65);
       this.allEggs[i].display();
       this.popMatrix();
     }
@@ -220,7 +221,11 @@ export class MyScene extends CGFscene {
     this.patch.display(treePos, this.camera.position);
     treePos = vec3.fromValues(-100,-62 ,-45);
     this.row.display(treePos, this.camera.position);
-    //treePos = vec3.fromValues(-70,-62 ,-65);
+    treePos = vec3.fromValues(-90,-62 ,-70);
+    this.pushMatrix();
+    this.rotate(Math.PI / 2, 0, 1, 0);
+    this.row.display(treePos, this.camera.position);
+    this.popMatrix();
     this.setActiveShader(this.defaultShader);
     // ---- END Primitive drawing section
   }

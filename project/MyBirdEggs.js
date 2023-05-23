@@ -10,10 +10,10 @@ import { MySemiSphere } from './MySemiSphere.js';
 export class MyBirdEggs extends CGFobject {
     
 
-	constructor(scene, scaleYYPlus, scaleYYMinor) {
+	constructor(scene, scaleYYPlus, scaleYYMinor, x, y, z) {
 		super(scene);
 
-        this.egg = new MySphere(scene, 2, 30, 20, false, scaleYYPlus, scaleYYMinor );
+        this.egg = new MySphere(scene, 2, 30, 20, false, scaleYYPlus, scaleYYMinor);
 
         let color = this.scene.hexToRgbA('#FFFFFF');
         this.eggAppearence = new CGFappearance(this.scene);
@@ -22,7 +22,11 @@ export class MyBirdEggs extends CGFobject {
         this.eggAppearence.setDiffuse(color[0], color[1], color[2], 1.0);
         this.eggAppearence.setShininess(10.0);
         this.eggAppearence.setTexture(new CGFtexture(scene, 'images/eggstexture.jpg'));
-    
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.ang = 0;
+        this.isPicked = false;
         
         this.initBuffers();
 	}
@@ -38,25 +42,12 @@ export class MyBirdEggs extends CGFobject {
     display(){
         this.scene.pushMatrix();
         this.eggAppearence.apply();
-        this.scene.translate(10, 10, 0);
+        this.scene.translate(this.x, this.y, this.z);
+        this.scene.rotate(this.ang, 0, 1, 0);
+        if (this.isPicked) this.scene.translate(-4.5,0.5,0);
         this.egg.display();
         this.scene.popMatrix();
-        /*
-        this.scene.pushMatrix();
-        this.scene.translate(10, 10, 0);
-        this.scene.rotate(Math.PI/2, 1, 0, 0);
-        this.scene.scale(1, this.scaleYY, 1);
-        this.topEgg.display();
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-        this.scene.translate(10, 10, 0);
-        this.scene.rotate(-Math.PI/2, 1, 0, 0);
-        this.scene.scale(1, this.scaleYY, 1);
-        this.bottomEgg.display();
-        this.bottomEgg.popMatrix();
-        */
-
-
+        
     }
 }
 

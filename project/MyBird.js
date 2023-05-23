@@ -11,7 +11,7 @@ import { MyPaw } from './MyPaw.js';
  */
 export class MyBird extends CGFobject {
 
-	constructor(scene, ang, velocity, pos_x, pos_y, pos_z) {
+	constructor(scene, ang, velocity, pos_x, pos_y, pos_z, allEggs) {
 		super(scene);
         this.body = new MySphere(scene, 3, 30, 30);
         this.eye = new MySphere(scene, 0.5, 15, 15);
@@ -19,7 +19,11 @@ export class MyBird extends CGFobject {
         this.wingLeft = new MyWings(scene, true);
         this.wingRight = new MyWings(scene, false);
         this.paw = new MyPaw(scene);
+        
+        // egg movement
         this.inicial_posy = pos_y;
+        this.eggVelocity = 0;
+        this.eggAng = 0;
 
         this.shader = new CGFshader(scene.gl, "shaders/birdAnimation.vert", "shaders/birdAnimation.frag")
         this.shader.setUniformsValues({ normScale: 1, timeFactor: 0 });
@@ -57,14 +61,18 @@ export class MyBird extends CGFobject {
         this.pos_x = pos_x;
         this.pos_y = pos_y;
         this.pos_z = pos_z;
-        this.velocity = 0;
-        this.time = 0;
+        this.velocity = velocity;
+        this.prevSpeedFactor = velocity;
         this.wingRotation;
         this.initBuffers();
         scene.setUpdatePeriod(50);
 
         this.gettingDown = false;
         this.gettingUp = false;
+        this.droppingEgg = false;
+
+        this.allEggs = allEggs;
+        this.catchedEgg = null;
 	}
 
     enableNormalViz(){
@@ -78,17 +86,52 @@ export class MyBird extends CGFobject {
     }
 
     update(t){
-
         this.heigth = Math.sin(2 * Math.PI / 10 * (t / 100 % 10 + 5) );
         //maybe the 1000/10 change with the velocity
         let velInc = this.velocity == 0 ? 1 :  (this.velocity / 0.2 + 1) * 0.5;
         this.wingRotation = Math.sin((2 * Math.PI) / (10 * velInc) * (t * velInc / 100 % 10) * velInc) * (Math.PI / 6) ;  // roda entre [ - Math.PI / 6, Math.PI / 6]
         
+        this.pos_x += this.velocity * Math.sin(this.ang) * 1.2;
+        this.pos_z += this.velocity * Math.cos(this.ang) * 1.2;
+       
+        if (this.catchedEgg != null) {
+            this.catchedEgg.isPicked = true;
+            if (!this.droppingEgg) { // egg with the bird
+                this.catchedEgg.x = this.pos_x-1;
+                this.catchedEgg.y = (this.pos_y-10)+this.heigth;
+                this.catchedEgg.z = this.pos_z+1;
+                this.catchedEgg.ang = this.ang - Math.PI/2;
+            } 
+        }
 
-        this.pos_x += this.velocity * Math.sin(this.ang + Math.PI/2) * 1.2;
-        this.pos_z += this.velocity * Math.cos(this.ang + Math.PI/2) * 1.2;
-        this.time = t;
-    
+        this.shader.setUniformsValues({ timeFactor: t / 100 % 100 });
+    }
+
+    checkEgg() {
+        
+        for(let i=0; i<this.allEggs.length; i++){
+            if(this.pos_x >= (this.allEggs[i].x - 5) && this.pos_x <= (this.allEggs[i].x + 5) && this.pos_z >= (this.allEggs[i].z - 5) && this.pos_z <= (this.allEggs[i].z + 5)) {
+                return this.allEggs[i];
+            }
+        }
+        return null;
+    }
+
+    dropEgg(){
+        if(this.catchedEgg.y > -52){
+            this.catchedEgg.y -= (52 - (-this.inicial_posy))/30;
+            this.catchedEgg.z += this.eggVelocity * Math.cos(this.eggAng) * 1.2;
+            this.catchedEgg.x += this.eggVelocity * Math.sin(this.eggAng) * 1.2;
+            this.catchedEgg.display();
+        }
+
+        else {
+            this.droppingEgg = false;
+            this.catchedEgg = false;
+            this.catchedEgg = null;
+        }
+            
+
     }
     
     turn(key){
@@ -112,29 +155,96 @@ export class MyBird extends CGFobject {
     }
 
     down(){
-        this.pos_y -= (62 - (-this.inicial_posy))/60;
+        this.gettingDown = true;
+        this.pos_y -= (58 - (-this.inicial_posy))/30;
+        this.checkEgg();
     }
 
     up(){
-        this.pos_y += (62 - (-this.inicial_posy))/60;
+        this.pos_y += (58 - (-this.inicial_posy))/30;
     }
 
     reset() {
+        this.gettingDown = false;
         this.pos_x = 0;
         this.pos_y = 0;
         this.pos_z = 0;
         this.velocity = 0;
-        this.ang = 1;
+        this.ang = 0;
+    }
+    
+    isGoingUp() {
+        return this.gettingUp;
     }
 
-    display(){
-        this.scene.translate(this.pos_x, this.pos_y + this.heigth  , this.pos_z);
-        this.scene.rotate(this.ang, 0, 1, 0);
-        this.colors["BODY"].apply();
-        this.scene.pushMatrix();
-        this.body.display();
-        this.scene.popMatrix();
+    isGoingDown() {
+        return this.gettingDown;
+    }
 
+    upDownMovement() {
+        if (this.gettingDown) {
+            if (this.pos_y > -58) {
+              this.down();
+            } else {
+              this.gettingDown = false;
+              this.gettingUp = true;
+    
+              this.catchedEgg = this.checkEgg()
+            } 
+          }
+    
+          if (this.gettingUp) {
+            if (this.pos_y < 0) {
+              this.up();
+            } else {
+              this.gettingUp = false;
+            } 
+          }
+    }
+
+    initEggDrop() {
+        this.droppingEgg = true;
+
+        this.eggVelocity = this.velocity;
+        this.eggAng = this.ang;
+    }
+
+    isEggDropping() {
+        return this.droppingEgg;
+    }
+
+    hasCatchedEgg() {
+        return this.catchedEgg != null;
+    }
+
+    getPosZ() {
+        return this.pos_z;
+    }
+
+    getPosX() {
+        return this.pos_x;
+    }
+
+    setVelocityByInterface(speed) {
+        if (this.prevSpeedFactor !== speed) {
+            this.velocity = speed;
+            this.prevSpeedFactor = this.velocity;
+        }
+    }
+
+    display(interfaceCommand, speedFactorCommand){  
+        this.setVelocityByInterface(speedFactorCommand)
+        let enterShader = false;
+        this.scene.pushMatrix();
+        if (interfaceCommand) {
+            this.scene.setActiveShader(this.shader);
+            enterShader = true;
+        }
+        this.scene.translate(this.pos_x, this.pos_y + this.heigth, this.pos_z);
+        this.scene.rotate(this.ang - Math.PI/2, 0, 1, 0);
+        this.colors["BODY"].apply();
+        this.body.display();
+  
         this.scene.pushMatrix();
         this.scene.translate(-4.5, -3, 0);
         this.scene.rotate(Math.PI /1.7, 0, 0, 1);
@@ -171,6 +281,7 @@ export class MyBird extends CGFobject {
         this.wingLeft.display();
         this.scene.popMatrix();
 
+        
         this.scene.pushMatrix();
         this.scene.translate(-4.5,-2,1);
         this.scene.rotate(Math.PI, 1,0, 0);
@@ -180,11 +291,15 @@ export class MyBird extends CGFobject {
         this.scene.translate(1 ,0, 0);
         this.wingRight.display();
         this.scene.popMatrix();
+        
         this.scene.pushMatrix();
         this.scene.translate(-4.5,-3,2);
         this.scene.rotate(Math.PI, 1,0, 0);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.paw.display();
+        this.scene.popMatrix();
+        if (enterShader || interfaceCommand) this.scene.setActiveShader(this.scene.defaultShader);
+
         this.scene.popMatrix();
     }
 }

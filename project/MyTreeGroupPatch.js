@@ -2,7 +2,7 @@ import { CGFobject, CGFtexture, CGFshader } from '../lib/CGF.js';
 import { MyBillboard } from "./MyBillboard.js";
 
 /**
- * MyPanorama
+ * MyTreeGroupPatch
  * @constructor
  * @param scene - Reference to MyScene object
  */
@@ -26,7 +26,7 @@ export class MyTreeGroupPatch extends CGFobject {
         this.shader.setUniformsValues({uSampler2 : 1});
 
     	for(let i = 0; i < 9; i++){
-            this.trees.push(new MyBillboard(scene, this.textures[this.getRandomNumber(0,2)], this.textures[3], this.getRandomNumber(12, 20)));
+            this.trees.push(new MyBillboard(scene, this.textures[this.getRandomNumber(0,2)], this.textures[3], this.getRandomNumber(30, 50)));
             this.randomX.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
             this.randomZ.push(this.getRandomNumber(- this.distance / 6, this.distance / 6));
         }
