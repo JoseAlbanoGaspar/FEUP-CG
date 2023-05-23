@@ -107,7 +107,6 @@ export class MyBird extends CGFobject {
         
         for(let i=0; i<this.allEggs.length; i++){
             if(this.pos_x >= (this.allEggs[i].x - 5) && this.pos_x <= (this.allEggs[i].x + 5) && this.pos_z >= (this.allEggs[i].z - 5) && this.pos_z <= (this.allEggs[i].z + 5)) {
-
                 return this.allEggs[i];
             }
         }
